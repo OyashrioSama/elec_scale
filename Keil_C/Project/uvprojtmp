@@ -63,6 +63,11 @@
               <FileType>1</FileType>
               <FilePath>..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_gpio.c</FilePath>
             </File>
+            <File>
+              <FileName>buzzer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FWLib\HardDrive\buzzer.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
