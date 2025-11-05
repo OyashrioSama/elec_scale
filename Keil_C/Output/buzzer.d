@@ -1,0 +1,15 @@
+..\Output\buzzer.o: ..\HardDrive\buzzer.c
+..\Output\buzzer.o: ..\HardDrive\buzzer.h
+..\Output\buzzer.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h
+..\Output\buzzer.o: ..\FWLib\SC32F1XXX_Lib\inc\SC32f12xx.h
+..\Output\buzzer.o: ..\CMSIS\core_cm0plus.h
+..\Output\buzzer.o: C:\Keil_v5\ARM\ARMCC\BIN\..\include\stdint.h
+..\Output\buzzer.o: ..\CMSIS\cmsis_version.h
+..\Output\buzzer.o: ..\CMSIS\cmsis_compiler.h
+..\Output\buzzer.o: ..\CMSIS\cmsis_armcc.h
+..\Output\buzzer.o: ..\CMSIS\mpu_armv7.h
+..\Output\buzzer.o: ..\FWLib\SC32F1XXX_Lib\inc\system_sc32xxxxx.h
+..\Output\buzzer.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_gpio.h
+..\Output\buzzer.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_pwm.h
+..\Output\buzzer.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32.h
+..\Output\buzzer.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_rcc.h

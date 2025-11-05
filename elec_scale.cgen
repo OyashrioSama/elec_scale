@@ -3,18 +3,18 @@ Project.Name=elec_scale
 Project.Path=D:\Saiyuan\elec_scale
 Project.KeilPath=D:\Saiyuan\elec_scale\Keil_C\
 Project.CurrentPath=D:\Saiyuan\elec_scale\elec_scale.cgen
-Project.CreationTime=20251104130903
-Project.ModificationTime=20251104130903
+Project.CreationTime=20251106002811
+Project.ModificationTime=20251106002811
 Project.Version=EasyCodeCube 3.6.0
 Project.IsBootloaderProject=false
 Project.ProjectMode=KEIL_ARM
 Project.IsUnifiedVersionProject=True
 [/Project]
 [ProjectSetting]
-[BSPVersion]V1.9.0[/BSPVersion]
-[BSPDateTime]2025-06-20[/BSPDateTime]
+[BSPVersion]V1.9.1[/BSPVersion]
+[BSPDateTime]2025-09-10[/BSPDateTime]
 [BSPPrompt]Y[/BSPPrompt]
-[BSPLastest]V1.9.0[/BSPLastest]
+[BSPLastest]V1.9.1[/BSPLastest]
 [/ProjectSetting]
 [WindowStyleSet]
 [WindowStyle]

@@ -132,8 +132,8 @@ N/**
 N ******************************************************************************
 N * @file    SC32F12XX.h
 N * @author  SOC SA Team
-N * @version V1.9.0
-N * @date    2025-06-20
+N * @version V1.9.1
+N * @date    2025-09-10
 N * @brief   CMSIS Cortex-M0+ Device Peripheral Access Layer Header File.
 N *          This file contains all the peripheral register's definitions, bits
 N *          definitions and memory mapping for SC32F12XX devices.
@@ -3295,15 +3295,15 @@ N#endif /* __CORE_CM0PLUS_H_DEPENDANT */
 N
 N#endif /* __CMSIS_GENERIC */
 L 132 "..\FWLib\SC32F1XXX_Lib\inc\SC32f12xx.h" 2
-N#include "system_sc32f1xxx.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\system_sc32f1xxx.h" 1
+N#include "system_sc32xxxxx.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\system_sc32xxxxx.h" 1
 N/**
-N ******************************************************************************
-N * @file    SYSTEM_sc32f1xxx.h
+N******************************************************************************
+N * @file    system_sc32xxxxx.h
 N * @author  SOC SA Team
-N * @version V1.9.0
-N * @date    2025-06-20
-N * @brief   CMSIS Cortex-M0+ Device System Source File for sc32f1xxx devices.
+N * @version V1.9-BetaV3
+N * @date    2025-10-13
+N * @brief   CMSIS Cortex-M0+ Device System Source File for sc32xxxxx devices.
 N ******************************************************************************
 N * @attention
 N *
@@ -3326,7 +3326,7 @@ N/** @addtogroup CMSIS
 N  * @{
 N  */
 N
-N/** @addtogroup sc32f1xxx_system
+N/** @addtogroup sc32xxxxx_system
 N  * @{
 N  */
 N
@@ -3340,7 +3340,7 @@ N#ifdef __cplusplus
 S extern "C" {
 N#endif
 N
-N/** @addtogroup sc32f1xxx_System_Includes
+N/** @addtogroup sc32xxxxx_System_Includes
 N  * @{
 N  */
 N
@@ -3349,7 +3349,7 @@ N  * @}
 N  */
 N
 N
-N/** @addtogroup sc32f1xxx_System_Exported_types
+N/** @addtogroup sc32xxxxx_System_Exported_types
 N  * @{
 N  */
 Nextern uint32_t SystemCoreClock;         /*!< System Clock Frequency (Core Clock) */
@@ -3361,7 +3361,7 @@ N/**
 N  * @}
 N  */
 N
-N/** @addtogroup sc32f1xxx_System_Exported_Constants
+N/** @addtogroup sc32xxxxx_System_Exported_Constants
 N  * @{
 N  */
 N
@@ -3369,7 +3369,7 @@ N/**
 N  * @}
 N  */
 N
-N/** @addtogroup sc32f1xxx_System_Exported_Macros
+N/** @addtogroup sc32xxxxx_System_Exported_Macros
 N  * @{
 N  */
 N
@@ -3377,7 +3377,7 @@ N/**
 N  * @}
 N  */
 N
-N/** @addtogroup sc32f1xxx_System_Exported_Functions
+N/** @addtogroup sc32xxxxx_System_Exported_Functions
 N  * @{
 N  */
 N
@@ -3391,7 +3391,7 @@ N#ifdef __cplusplus
 S}
 N#endif
 N
-N#endif /*SYSTEM_sc32f1xxx_H */
+N#endif /*SYSTEM_SC32XXXXX_H */
 N
 N/**
 N  * @}
@@ -5984,6 +5984,25 @@ N
 N#define COPT1_CFG_ENWDT_Pos               (7U)
 N#define COPT1_CFG_ENWDT_Msk               (0x1L << COPT1_CFG_ENWDT_Pos)          
 N#define COPT1_CFG_ENWDT                   COPT1_CFG_ENWDT_Msk
+N
+N
+N/**********  Configure the unrouted pins as strong push-pull outputs  **********/
+N#define  SC32F12xCx_NIO_Init()   {*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00000002;}
+N
+N#define  SC32F12xSx_NIO_Init()   {*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00000002;\
+N																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C00;}
+X#define  SC32F12xSx_NIO_Init()   {*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00000002;																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C00;}
+N
+N#define  SC32F12xKx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;\
+N																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;\
+N																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C03;}
+X#define  SC32F12xKx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C03;}
+N
+N#define  SC32F12xGx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;\
+N																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;\
+N																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003FC3;}
+X#define  SC32F12xGx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003FC3;}
+N
 N/** @addtogroup Exported_macros
 N  * @{
 N  */

@@ -1,0 +1,15 @@
+..\Output\key.o: ..\HardDrive\key.c
+..\Output\key.o: ..\HardDrive\key.h
+..\Output\key.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h
+..\Output\key.o: ..\FWLib\SC32F1XXX_Lib\inc\SC32f12xx.h
+..\Output\key.o: ..\CMSIS\core_cm0plus.h
+..\Output\key.o: C:\Keil_v5\ARM\ARMCC\BIN\..\include\stdint.h
+..\Output\key.o: ..\CMSIS\cmsis_version.h
+..\Output\key.o: ..\CMSIS\cmsis_compiler.h
+..\Output\key.o: ..\CMSIS\cmsis_armcc.h
+..\Output\key.o: ..\CMSIS\mpu_armv7.h
+..\Output\key.o: ..\FWLib\SC32F1XXX_Lib\inc\system_sc32xxxxx.h
+..\Output\key.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_gpio.h
+..\Output\key.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_int.h
+..\Output\key.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32.h
+..\Output\key.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_rcc.h

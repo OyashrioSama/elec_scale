@@ -2,8 +2,8 @@
  ******************************************************************************
  * @file    SC32F12XX.h
  * @author  SOC SA Team
- * @version V1.9.0
- * @date    2025-06-20
+ * @version V1.9.1
+ * @date    2025-09-10
  * @brief   CMSIS Cortex-M0+ Device Peripheral Access Layer Header File.
  *          This file contains all the peripheral register's definitions, bits
  *          definitions and memory mapping for SC32F12XX devices.
@@ -129,7 +129,7 @@ typedef enum
   */
 
 #include "core_cm0plus.h"               /* Cortex-M0+ processor and core peripherals */
-#include "system_sc32f1xxx.h"
+#include "system_sc32xxxxx.h"
 #include <stdint.h>
 
 
@@ -2575,6 +2575,22 @@ typedef struct
 #define COPT1_CFG_ENWDT_Pos               (7U)
 #define COPT1_CFG_ENWDT_Msk               (0x1L << COPT1_CFG_ENWDT_Pos)          
 #define COPT1_CFG_ENWDT                   COPT1_CFG_ENWDT_Msk
+
+
+/**********  Configure the unrouted pins as strong push-pull outputs  **********/
+#define  SC32F12xCx_NIO_Init()   {*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00000002;}
+
+#define  SC32F12xSx_NIO_Init()   {*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00000002;\
+																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C00;}
+
+#define  SC32F12xKx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;\
+																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;\
+																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C03;}
+
+#define  SC32F12xGx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;\
+																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;\
+																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003FC3;}
+
 /** @addtogroup Exported_macros
   * @{
   */

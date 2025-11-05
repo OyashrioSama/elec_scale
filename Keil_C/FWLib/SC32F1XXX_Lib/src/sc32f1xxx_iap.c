@@ -2,8 +2,8 @@
  ******************************************************************************
  * @file    sc32f1xxx_iap.c
  * @author  SOC AE Team
- * @version V1.9.0
- * @date    2025-06-20
+ * @version V1.9.1
+ * @date    2025-09-10
  * @brief   IAP function module
  ******************************************************************************
  * @attention
@@ -34,7 +34,7 @@ static boolType IAP_NOP(void);
 typedef boolType (*pInitIapInRam)(uint32_t Address, uint32_t Data,IAPWRITE_ALIGNTYPE Type);
 
 /* Static memory buffer: Used to store IAP programming functions in RAM */
-__align(4) static uint8_t IapProgramInRam[180]={0};
+__ALIGNED(4) static uint8_t IapProgramInRam[180]={0};
 /* Initialized to the IAP_NOP function as a placeholder or default operation */
 static pInitIapInRam pWriteIapFun=(pInitIapInRam)IAP_NOP;
 
@@ -769,7 +769,7 @@ uint16_t IAP_ProgramWordArray ( uint32_t Address, uint32_t* ByteArray, uint16_t 
 				/* Define function pointer type for the RAM-based IAP programming function */
 				typedef uint16_t (*pInitFlashInRam)( uint32_t Address, uint8_t* ByteArray, uint16_t ArraySize,IAPWRITE_ALIGNTYPE Type );
 				/* Allocate and initialize RAM buffer for the IAP programming function */
-				__align(4) uint8_t IapWriteInRam[256]={0};
+				__ALIGNED(4) uint8_t IapWriteInRam[256]={0};
 				/* Copy the IAP programming function from FLASH to RAM */
 				for(uint16_t i=0;i<sizeof(IapWriteInRam);i++)
 				{
@@ -840,7 +840,7 @@ uint16_t IAP_ProgramWordArray ( uint32_t Address, uint32_t* ByteArray, uint16_t 
 				/* Define function pointer type for the RAM-based IAP programming function */
 				typedef uint16_t (*pInitFlashInRam)( uint32_t Address, uint8_t* ByteArray, uint16_t ArraySize,IAPWRITE_ALIGNTYPE Type );
 				/* Allocate and initialize RAM buffer for the IAP programming function */
-				__align(4) uint8_t IapWriteInRam[256]={0};
+				__ALIGNED(4) uint8_t IapWriteInRam[256]={0};
 				/* Copy the IAP programming function from FLASH to RAM */
 				for(uint16_t i=0;i<sizeof(IapWriteInRam);i++)
 				{
@@ -910,7 +910,7 @@ uint16_t IAP_ProgramHalfWordArray ( uint32_t Address, uint16_t* ByteArray, uint1
 				/* Define function pointer type for the RAM-based IAP programming function */
 				typedef uint16_t (*pInitFlashInRam)( uint32_t Address, uint8_t* ByteArray, uint16_t ArraySize,IAPWRITE_ALIGNTYPE Type );
 				/* Allocate and initialize RAM buffer for the IAP programming function */
-				__align(4) uint8_t IapWriteInRam[256]={0};
+				__ALIGNED(4) uint8_t IapWriteInRam[256]={0};
 				/* Copy the IAP programming function from FLASH to RAM */
 				for(uint16_t i=0;i<sizeof(IapWriteInRam);i++)
 				{
@@ -975,7 +975,7 @@ uint16_t IAP_ProgramByteArray ( uint32_t Address, uint8_t* ByteArray, uint16_t A
 				/* Define function pointer type for the RAM-based IAP programming function */
 				typedef uint16_t (*pInitFlashInRam)( uint32_t Address, uint8_t* ByteArray, uint16_t ArraySize,IAPWRITE_ALIGNTYPE Type );
 				/* Allocate and initialize RAM buffer for the IAP programming function */
-				__align(4) uint8_t IapWriteInRam[256]={0};	
+				__ALIGNED(4) uint8_t IapWriteInRam[256]={0};	
 				/* Copy the IAP programming function from FLASH to RAM */
 				for(uint16_t i=0;i<sizeof(IapWriteInRam);i++)
 				{

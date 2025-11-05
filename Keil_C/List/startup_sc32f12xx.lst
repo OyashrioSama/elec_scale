@@ -400,8 +400,9 @@ ARM Macro Assembler    Page 7
               00000200 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0+ --apcs=inter
-work -o..\Output\startup_sc32f12xx.o --predefine="__UVISION_VERSION SETA 536" -
--list=..\List\startup_sc32f12xx.lst .\startup_sc32f12xx.s
+work --depend=..\Output\startup_sc32f12xx.d -o..\Output\startup_sc32f12xx.o --p
+redefine="__UVISION_VERSION SETA 536" --predefine="SC32f12xx SETA 1" --list=..\
+List\startup_sc32f12xx.lst .\startup_sc32f12xx.s
 
 
 
@@ -947,4 +948,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 3 symbols
-389 symbols in table
+390 symbols in table

@@ -2,8 +2,8 @@
  ******************************************************************************
  * @file    sc32f1xxx_uart.c
  * @author  SOC AE Team
- * @version V1.9.0
- * @date    2025-06-20
+ * @version V1.9.1
+ * @date    2025-09-10
  * @brief   UART function module
  ******************************************************************************
  * @attention
@@ -35,6 +35,11 @@
 @endverbatim
   * @{
   */
+#if (UARTOptSwitch)
+/* Define a global variable RXStatus to indicate the enable status of RX */
+static uint32_t RXStatus = 0;
+#endif
+	
 UART_TypeDef* Printf_Uart;
 /**
  * @brief  DeInitializes the UART peripheral
@@ -168,6 +173,22 @@ void UART_TXCmd ( UART_TypeDef* UARTx, FunctionalState NewState )
     /* Check the parameters */
     assert_param ( IS_UART_ALL_PERIPH ( UARTx ) );
     assert_param ( IS_FUNCTIONAL_STATE ( NewState ) );
+	
+		/* If it is the programming port UART and no pin mapping has been performed, 
+			 set the TX output to high */
+#if (UARTOptSwitch)
+#if defined(SC32f10xx)
+		if(UARTx == UART0)
+		{
+				PC_BIT(3) = 1;
+		}
+#elif defined(SC32f12xx)
+		if((UARTx == UART1) && ((UART1->UART_CON & UART_CON_SPOS) == 0))
+		{
+				PB_BIT(1) = 1;
+		}
+#endif
+#endif
 
     if ( NewState != DISABLE )
     {
@@ -202,6 +223,24 @@ void UART_RXCmd ( UART_TypeDef* UARTx, FunctionalState NewState )
     /* Check the parameters */
     assert_param ( IS_UART_ALL_PERIPH ( UARTx ) );
     assert_param ( IS_FUNCTIONAL_STATE ( NewState ) );
+	
+		/* If it is the programming port UART and no pin mapping has been performed,
+  	   set the RX output to low */
+#if (UARTOptSwitch)
+#if defined(SC32f10xx)
+		if(UARTx == UART0)
+		{
+				PC_BIT(2) = 0;
+				GPIOC->PXCON |= ( uint32_t )0x00000004;
+		}
+#elif defined(SC32f12xx)
+		if((UARTx == UART1) && ((UART1->UART_CON & UART_CON_SPOS) == 0))
+		{
+				PA_BIT(15) = 0;
+				GPIOA->PXCON |= ( uint32_t )0x00008000;
+		}
+#endif
+#endif
 
     if ( NewState != DISABLE )
     {
@@ -248,6 +287,26 @@ void UART_SendData ( UART_TypeDef* UARTx, uint16_t Data )
 {
     /* Check the parameters */
     assert_param ( IS_UART_ALL_PERIPH ( UARTx ) );
+	
+#if (UARTOptSwitch)
+#if defined(SC32f10xx)
+		if(UARTx == UART0)
+		{
+				/* Save the RX status */
+				RXStatus = UARTx->UART_CON & ( uint16_t ) UART_CON_RXEN;
+				/* Disable the UART RX Function */
+        UARTx->UART_CON &= ( uint16_t ) ~UART_CON_RXEN;
+		}
+#elif defined(SC32f12xx)
+		if((UARTx == UART1) && ((UART1->UART_CON & UART_CON_SPOS) == 0))
+		{
+				/* Save the RX status */
+				RXStatus = UARTx->UART_CON & ( uint16_t ) UART_CON_RXEN;
+				/* Disable the UART RX Function */
+        UARTx->UART_CON &= ( uint16_t ) ~UART_CON_RXEN;
+		}
+#endif
+#endif
 
     /* Transmit Data */
     UARTx->UART_DATA = ( Data & ( uint16_t ) 0x01FF );
@@ -459,6 +518,22 @@ void UART_ClearFlag ( UART_TypeDef* UARTx, uint16_t UART_FLAG )
 
     /* Clear the flags */
     UARTx->UART_STS = ( uint16_t ) UART_FLAG;
+	
+#if (UARTOptSwitch)
+#if defined(SC32f10xx)
+		if(UARTx == UART0)
+		{
+				/* Restore the UART RX status */
+        UARTx->UART_CON |= RXStatus;
+		}
+#elif defined(SC32f12xx)
+		if((UARTx == UART1) && ((UART1->UART_CON & UART_CON_SPOS) == 0))
+		{
+				/* Restore the UART RX status */
+        UARTx->UART_CON |= RXStatus;
+		}
+#endif
+#endif
 }
 
 /**

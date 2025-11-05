@@ -1,0 +1,13 @@
+..\Output\sc32f1xxx_op.o: ..\FWLib\SC32F1XXX_Lib\src\sc32f1xxx_op.c
+..\Output\sc32f1xxx_op.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_op.h
+..\Output\sc32f1xxx_op.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32.h
+..\Output\sc32f1xxx_op.o: C:\Keil_v5\ARM\ARMCC\BIN\..\include\stdint.h
+..\Output\sc32f1xxx_op.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_rcc.h
+..\Output\sc32f1xxx_op.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h
+..\Output\sc32f1xxx_op.o: ..\FWLib\SC32F1XXX_Lib\inc\SC32f12xx.h
+..\Output\sc32f1xxx_op.o: ..\CMSIS\core_cm0plus.h
+..\Output\sc32f1xxx_op.o: ..\CMSIS\cmsis_version.h
+..\Output\sc32f1xxx_op.o: ..\CMSIS\cmsis_compiler.h
+..\Output\sc32f1xxx_op.o: ..\CMSIS\cmsis_armcc.h
+..\Output\sc32f1xxx_op.o: ..\CMSIS\mpu_armv7.h
+..\Output\sc32f1xxx_op.o: ..\FWLib\SC32F1XXX_Lib\inc\system_sc32xxxxx.h

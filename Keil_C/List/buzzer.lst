@@ -1,6 +1,8 @@
-L 1 "..\FWLib\HardDrive\buzzer.c"
+L 1 "..\HardDrive\buzzer.c"
+N//buzzer.c
 N#include "buzzer.h"
-L 1 "..\FWLib\HardDrive\buzzer.h" 1
+L 1 "..\HardDrive\buzzer.h" 1
+N//buzzer.h
 N#ifndef __BUZZER_H
 N#define __BUZZER_H
 N
@@ -74,8 +76,8 @@ N/**
 N ******************************************************************************
 N * @file    SC32F12XX.h
 N * @author  SOC SA Team
-N * @version V1.9.0
-N * @date    2025-06-20
+N * @version V1.9.1
+N * @date    2025-09-10
 N * @brief   CMSIS Cortex-M0+ Device Peripheral Access Layer Header File.
 N *          This file contains all the peripheral register's definitions, bits
 N *          definitions and memory mapping for SC32F12XX devices.
@@ -3237,15 +3239,15 @@ N#endif /* __CORE_CM0PLUS_H_DEPENDANT */
 N
 N#endif /* __CMSIS_GENERIC */
 L 132 "..\FWLib\SC32F1XXX_Lib\inc\SC32f12xx.h" 2
-N#include "system_sc32f1xxx.h"
-L 1 "..\FWLib\SC32F1XXX_Lib\inc\system_sc32f1xxx.h" 1
+N#include "system_sc32xxxxx.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\system_sc32xxxxx.h" 1
 N/**
-N ******************************************************************************
-N * @file    SYSTEM_sc32f1xxx.h
+N******************************************************************************
+N * @file    system_sc32xxxxx.h
 N * @author  SOC SA Team
-N * @version V1.9.0
-N * @date    2025-06-20
-N * @brief   CMSIS Cortex-M0+ Device System Source File for sc32f1xxx devices.
+N * @version V1.9-BetaV3
+N * @date    2025-10-13
+N * @brief   CMSIS Cortex-M0+ Device System Source File for sc32xxxxx devices.
 N ******************************************************************************
 N * @attention
 N *
@@ -3268,7 +3270,7 @@ N/** @addtogroup CMSIS
 N  * @{
 N  */
 N
-N/** @addtogroup sc32f1xxx_system
+N/** @addtogroup sc32xxxxx_system
 N  * @{
 N  */
 N
@@ -3282,7 +3284,7 @@ N#ifdef __cplusplus
 S extern "C" {
 N#endif
 N
-N/** @addtogroup sc32f1xxx_System_Includes
+N/** @addtogroup sc32xxxxx_System_Includes
 N  * @{
 N  */
 N
@@ -3291,7 +3293,7 @@ N  * @}
 N  */
 N
 N
-N/** @addtogroup sc32f1xxx_System_Exported_types
+N/** @addtogroup sc32xxxxx_System_Exported_types
 N  * @{
 N  */
 Nextern uint32_t SystemCoreClock;         /*!< System Clock Frequency (Core Clock) */
@@ -3303,7 +3305,7 @@ N/**
 N  * @}
 N  */
 N
-N/** @addtogroup sc32f1xxx_System_Exported_Constants
+N/** @addtogroup sc32xxxxx_System_Exported_Constants
 N  * @{
 N  */
 N
@@ -3311,7 +3313,7 @@ N/**
 N  * @}
 N  */
 N
-N/** @addtogroup sc32f1xxx_System_Exported_Macros
+N/** @addtogroup sc32xxxxx_System_Exported_Macros
 N  * @{
 N  */
 N
@@ -3319,7 +3321,7 @@ N/**
 N  * @}
 N  */
 N
-N/** @addtogroup sc32f1xxx_System_Exported_Functions
+N/** @addtogroup sc32xxxxx_System_Exported_Functions
 N  * @{
 N  */
 N
@@ -3333,7 +3335,7 @@ N#ifdef __cplusplus
 S}
 N#endif
 N
-N#endif /*SYSTEM_sc32f1xxx_H */
+N#endif /*SYSTEM_SC32XXXXX_H */
 N
 N/**
 N  * @}
@@ -5926,6 +5928,25 @@ N
 N#define COPT1_CFG_ENWDT_Pos               (7U)
 N#define COPT1_CFG_ENWDT_Msk               (0x1L << COPT1_CFG_ENWDT_Pos)          
 N#define COPT1_CFG_ENWDT                   COPT1_CFG_ENWDT_Msk
+N
+N
+N/**********  Configure the unrouted pins as strong push-pull outputs  **********/
+N#define  SC32F12xCx_NIO_Init()   {*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00000002;}
+N
+N#define  SC32F12xSx_NIO_Init()   {*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00000002;\
+N																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C00;}
+X#define  SC32F12xSx_NIO_Init()   {*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00000002;																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C00;}
+N
+N#define  SC32F12xKx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;\
+N																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;\
+N																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C03;}
+X#define  SC32F12xKx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003C03;}
+N
+N#define  SC32F12xGx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;\
+N																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;\
+N																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003FC3;}
+X#define  SC32F12xGx_NIO_Init()   {*(uint32_t*)(GPIOA_BIT_BASE+0X00000020) |= ( uint32_t ) 0x000003C0;																	*(uint32_t*)(GPIOB_BIT_BASE+0X00000020) |= ( uint32_t ) 0x0000C03E;																	*(uint32_t*)(GPIOC_BIT_BASE+0X00000020) |= ( uint32_t ) 0x00003FC3;}
+N
 N/** @addtogroup Exported_macros
 N  * @{
 N  */
@@ -5978,7 +5999,7 @@ N/**
 N* @}
 N*/
 N
-L 5 "..\FWLib\HardDrive\buzzer.h" 2
+L 6 "..\HardDrive\buzzer.h" 2
 N#include "sc32f1xxx_gpio.h"
 L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_gpio.h" 1
 N/**
@@ -6213,73 +6234,1230 @@ N
 N#endif /* _SC32F1XXX_GPIO_H */
 N
 N
-L 6 "..\FWLib\HardDrive\buzzer.h" 2
+L 7 "..\HardDrive\buzzer.h" 2
+N#include "sc32f1xxx_pwm.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_pwm.h" 1
+N/**
+N ******************************************************************************
+N * @file    SC32f1xxx_pwm.h
+N * @author  SOC AE Team
+N * @version V1.9.0
+N * @date    2025-06-20
+N * @brief   Header file of PWM module.
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
 N
-N/** @brief ËúÇÈ∏£Âô®ÈÖçÁΩÆÁªìÊûÑ‰Ωì */
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __sc32f1xxx_PWM_H
+N#define __sc32f1xxx_PWM_H
+N
+N#ifdef __cplusplus
+Sextern "C"
+S{
+N#endif
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "sc32f1xxx.h"
+N#include "sc32.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32.h" 1
+N/**
+N ******************************************************************************
+N * @file    SC32.h
+N * @author  SOC AE Team
+N * @version V1.9.0
+N * @date    2025-06-20
+N * @brief    The macro definition of `assert_param(expr)` is used to check whether 
+N                  the expression `expr` evaluates to true. If the expression is false, it calls 
+N                  the `assert_failed` function to report an assertion failure.
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N/** @addtogroup CMSIS_Device
+N* @{
+N*/
+N
+N/** @addtogroup sc32
+N  * @{
+N  */
+N
+N#ifndef SC32_H
+N#define SC32_H
+N
+N#ifdef __cplusplus
+S extern "C" {
+N#endif
+N
+N#include <stdint.h>
+N
+N/* Exported macro ------------------------------------------------------------*/
+N#ifdef  USE_FULL_ASSERT
+S/**
+S  * @brief  The assert_param macro is used for function's parameters check.
+S  * @param  expr: If expr is false, it calls assert_failed function
+S  *         which reports the name of the source file and the source
+S  *         line number of the call that failed.
+S  *         If expr is true, it returns no value.
+S  * @retval None
+S  */
+S#define assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))
+S/* Exported functions ------------------------------------------------------- */
+Svoid assert_failed(uint8_t* file, uint32_t line);
+N#else
+N#define assert_param(expr) ((void)0U)
+N#endif /* USE_FULL_ASSERT */
+N
+N
+N#ifdef __cplusplus
+S}
+N#endif /* __cplusplus */
+N
+N#endif /* SC32_H */
+N
+N/**
+N  * @}
+N  */
+N
+N/**
+N* @}
+N*/
+N
+N/************************ (C) COPYRIGHT SIN ONE CHIP *****END OF FILE****/
+L 38 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_pwm.h" 2
+N#include "sc32f1xxx_rcc.h"
+L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_rcc.h" 1
+N/**
+N ******************************************************************************
+N * @file    sc32f1xxx_rcc.h
+N * @author  SOC AE Team
+N * @version V1.9.0
+N * @date    2025-06-20
+N * @brief   This file contains all the functions prototypes for the RCC
+N ******************************************************************************
+N * @attention
+N *
+N *1.This software is supplied by SinOne Microelectronics Co.,Ltd. and is only 
+N *intended for use with SinOne products. No other uses are authorized. This 
+N *software is owned by SinOne Microelectronics Co.,Ltd. and is protected under 
+N *all applicable laws, including copyright laws. 
+N *2.The software which is for guidance only aims at providing customers with 
+N *coding information regarding their products in order for them to save time. 
+N *As a result, SinOne shall not be held liable for any direct, indirect or 
+N *consequential damages with respect to any claims arising from the content of 
+N *such software and/or the use made by customers of the coding information 
+N *contained herein in connection with their products.
+N *
+N *  COPYRIGHT 2025 SinOne Microelectronics
+N ******************************************************************************
+N */
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __sc32f1xxx_RCC_H
+N#define __sc32f1xxx_RCC_H
+N
+N
+N#ifdef __cplusplus
+Sextern "C"
+S{
+N#endif
+N
+N/*!< Includes ----------------------------------------------------------------*/
+N#include "sc32f1xxx.h"
+N#include "sc32.h"
+N
+N/** @addtogroup sc32f1xxx_StdPeriph_Driver
+N * @{
+N */
+N
+N/** @addtogroup RCC
+N * @{
+N */
+N
+N/* Exported types ------------------------------------------------------------*/
+N/** @brief RCC_SYSCLKSource System Clock Source
+N * @{
+N */
+N#if defined(SC32f10xx)
+X#if 0L
+Stypedef enum
+S{
+S    RCC_SYSCLKSource_HIRC   = ( uint16_t ) ( ~RCC_CFG0_SYSCLKSW ), /*!< SYSCLK Source    HIRC */
+S    RCC_SYSCLKSource_LIRC    =
+S        ( uint16_t ) ( ( 0x00 << RCC_CFG0_SYSCLKSEL_Pos ) ), /*!< SYSCLK Source    LIRC */
+S    RCC_SYSCLKSource_HXT    =
+S        ( uint16_t ) ( ( 0x01 << RCC_CFG0_SYSCLKSEL_Pos ) ), /*!< SYSCLK Source    HXT */
+S    RCC_SYSCLKSource_PLLRCLK =
+S        ( uint16_t ) ( ( 0x02 << RCC_CFG0_SYSCLKSEL_Pos ) ), /*!< SYSCLK Source    PLLCK */
+S    RCC_SYSCLKSource_LXT    =
+S        ( uint16_t ) ( ( 0x03 << RCC_CFG0_SYSCLKSEL_Pos ) ), /*!< SYSCLK Source    LXT */
+S} RCC_SYSCLKSource_TypeDef;
+S
+S#define IS_RCC_SYSCLKSOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HIRC) || \
+S                                     ((SOURCE) == RCC_SYSCLKSource_LIRC) || \
+S                                     ((SOURCE) == RCC_SYSCLKSource_HXT)  || \
+S                                     ((SOURCE) == RCC_SYSCLKSource_PLLRCLK) || \
+S                                     ((SOURCE) == RCC_SYSCLKSource_LXT))
+X#define IS_RCC_SYSCLKSOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HIRC) ||                                      ((SOURCE) == RCC_SYSCLKSource_LIRC) ||                                      ((SOURCE) == RCC_SYSCLKSource_HXT)  ||                                      ((SOURCE) == RCC_SYSCLKSource_PLLRCLK) ||                                      ((SOURCE) == RCC_SYSCLKSource_LXT))
+N#elif defined(SC32f12xx)
+X#elif 1L
+Ntypedef enum
+N{
+N    RCC_SYSCLKSource_HIRC_2   = ( uint16_t ) ( ~RCC_CFG0_SYSCLKSW ), /*!< SYSCLK Source    HIRC/2 */
+X    RCC_SYSCLKSource_HIRC_2   = ( uint16_t ) ( ~(0x1UL << (7U)) ),  
+N    RCC_SYSCLKSource_LIRC    =
+N        ( uint16_t ) ( ( 0x00 << RCC_CFG0_SYSCLKSEL_Pos ) ), /*!< SYSCLK Source    LIRC */
+X        ( uint16_t ) ( ( 0x00 << (8U) ) ),  
+N    RCC_SYSCLKSource_HXT    =
+N        ( uint16_t ) ( ( 0x01 << RCC_CFG0_SYSCLKSEL_Pos ) ), /*!< SYSCLK Source    HXT */
+X        ( uint16_t ) ( ( 0x01 << (8U) ) ),  
+N    RCC_SYSCLKSource_HIRC =
+N        ( uint16_t ) ( ( 0x02 << RCC_CFG0_SYSCLKSEL_Pos ) ), /*!< SYSCLK Source    HIRC */
+X        ( uint16_t ) ( ( 0x02 << (8U) ) ),  
+N    RCC_SYSCLKSource_LXT    =
+N        ( uint16_t ) ( ( 0x03 << RCC_CFG0_SYSCLKSEL_Pos ) ), /*!< SYSCLK Source    LXT */
+X        ( uint16_t ) ( ( 0x03 << (8U) ) ),  
+N} RCC_SYSCLKSource_TypeDef;
+N
+N#define IS_RCC_SYSCLKSOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HIRC_2) || \
+N                                     ((SOURCE) == RCC_SYSCLKSource_LIRC) || \
+N                                     ((SOURCE) == RCC_SYSCLKSource_HXT)  || \
+N                                     ((SOURCE) == RCC_SYSCLKSource_HIRC) || \
+N                                     ((SOURCE) == RCC_SYSCLKSource_LXT))
+X#define IS_RCC_SYSCLKSOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HIRC_2) ||                                      ((SOURCE) == RCC_SYSCLKSource_LIRC) ||                                      ((SOURCE) == RCC_SYSCLKSource_HXT)  ||                                      ((SOURCE) == RCC_SYSCLKSource_HIRC) ||                                      ((SOURCE) == RCC_SYSCLKSource_LXT))
+N
+N
+N#endif
+N/**
+N * @}
+N */
+N
+N/** @brief RCC_SysTickSource SysTick Clock Source
+N * @{
+N */
+Ntypedef enum
+N{
+N    RCC_SysTickSource_HCLK_DIV8 =
+N        ( uint8_t ) ( 0X00 << RCC_CFG1_STCLKSEL_Pos ), /*!< SysTickCLK clock = HCLK/8 */
+X        ( uint8_t ) ( 0X00 << (5U) ),  
+N    RCC_SysTickSource_HIRC_DIV2  =
+N        ( uint8_t ) ( 0X01 << RCC_CFG1_STCLKSEL_Pos ), /*!< SysTickCLK clock = HIRC/2 */
+X        ( uint8_t ) ( 0X01 << (5U) ),  
+N    RCC_SysTickSource_HXT_DIV2  =
+N        ( uint8_t ) ( 0X02 << RCC_CFG1_STCLKSEL_Pos ), /*!< SysTickCLK clock = HXT/2 */
+X        ( uint8_t ) ( 0X02 << (5U) ),  
+N    RCC_SysTickSource_LIRC  =
+N        ( uint8_t ) ( 0X03 << RCC_CFG1_STCLKSEL_Pos ), /*!< SysTickCLK clock = LIRC */
+X        ( uint8_t ) ( 0X03 << (5U) ),  
+N    RCC_SysTickSource_LXT  =
+N        ( uint8_t ) ( 0X04 << RCC_CFG1_STCLKSEL_Pos ), /*!< SysTickCLK clock = LXT */
+X        ( uint8_t ) ( 0X04 << (5U) ),  
+N    RCC_SysTickSource_HCLK = ( uint8_t ) ( 0X01 ), /*!< SysTickCLK clock = HCLK */
+N} RCC_SysTickSource_TypeDef;
+N
+N#define IS_RCC_SYSTICKSOURCE(SOURCE) (((SOURCE) == RCC_SysTickSource_HCLK_DIV8) || \
+N                                      ((SOURCE) == RCC_SysTickSource_HIRC_DIV2) || \
+N                                      ((SOURCE) == RCC_SysTickSource_HXT_DIV2) || \
+N                                      ((SOURCE) == RCC_SysTickSource_LIRC) || \
+N                                      ((SOURCE) == RCC_SysTickSource_LXT)|| \
+N                                      ((SOURCE) == RCC_SysTickSource_HCLK))
+X#define IS_RCC_SYSTICKSOURCE(SOURCE) (((SOURCE) == RCC_SysTickSource_HCLK_DIV8) ||                                       ((SOURCE) == RCC_SysTickSource_HIRC_DIV2) ||                                       ((SOURCE) == RCC_SysTickSource_HXT_DIV2) ||                                       ((SOURCE) == RCC_SysTickSource_LIRC) ||                                       ((SOURCE) == RCC_SysTickSource_LXT)||                                       ((SOURCE) == RCC_SysTickSource_HCLK))
+N/**
+N * @}
+N */
+N
+N/** @brief RCC_HCLK HCLK clock Source
+N * @{
+N */
+Ntypedef enum
+N{
+N    RCC_SYSCLK_Div1  = ( uint32_t ) ( 0x00 << AHB_CFG_CLKDIV_Pos ), /*!< AHB clock = SYSCLK */
+X    RCC_SYSCLK_Div1  = ( uint32_t ) ( 0x00 << (20U) ),  
+N    RCC_SYSCLK_Div2  = ( uint32_t ) ( 0x01 << AHB_CFG_CLKDIV_Pos ), /*!< AHB clock = SYSCLK/2 */
+X    RCC_SYSCLK_Div2  = ( uint32_t ) ( 0x01 << (20U) ),  
+N    RCC_SYSCLK_Div4  = ( uint32_t ) ( 0x02 << AHB_CFG_CLKDIV_Pos ), /*!< AHB clock = SYSCLK/4 */
+X    RCC_SYSCLK_Div4  = ( uint32_t ) ( 0x02 << (20U) ),  
+N    RCC_SYSCLK_Div8  = ( uint32_t ) ( 0x03 << AHB_CFG_CLKDIV_Pos ), /*!< AHB clock = SYSCLK/8 */
+X    RCC_SYSCLK_Div8  = ( uint32_t ) ( 0x03 << (20U) ),  
+N    RCC_SYSCLK_Div16 = ( uint32_t ) ( 0x04 << AHB_CFG_CLKDIV_Pos ), /*!< AHB clock = SYSCLK/16 */
+X    RCC_SYSCLK_Div16 = ( uint32_t ) ( 0x04 << (20U) ),  
+N} RCC_HCLK_TypeDef;
+N
+N#define IS_RCC_HCLK(HCLK) (((HCLK) == RCC_SYSCLK_Div1) || \
+N                           ((HCLK) == RCC_SYSCLK_Div2) || \
+N                           ((HCLK) == RCC_SYSCLK_Div4) || \
+N                           ((HCLK) == RCC_SYSCLK_Div8) || \
+N                           ((HCLK) == RCC_SYSCLK_Div16))
+X#define IS_RCC_HCLK(HCLK) (((HCLK) == RCC_SYSCLK_Div1) ||                            ((HCLK) == RCC_SYSCLK_Div2) ||                            ((HCLK) == RCC_SYSCLK_Div4) ||                            ((HCLK) == RCC_SYSCLK_Div8) ||                            ((HCLK) == RCC_SYSCLK_Div16))
+N
+N/**
+N * @}
+N */
+N
+N/** @brief RCC_PCLK  RCC PCLK
+N * @{
+N */
+N
+Ntypedef enum
+N{
+N    RCC_HCLK_Div1		= ( uint32_t ) ( 0x00 << AHB_CFG_CLKDIV_Pos ), /*!< APB clock = AHB */
+X    RCC_HCLK_Div1		= ( uint32_t ) ( 0x00 << (20U) ),  
+N    RCC_HCLK_Div2		= ( uint32_t ) ( 0x01 << AHB_CFG_CLKDIV_Pos ), /*!< APB clock = AHB/2 */
+X    RCC_HCLK_Div2		= ( uint32_t ) ( 0x01 << (20U) ),  
+N    RCC_HCLK_Div4		= ( uint32_t ) ( 0x02 << AHB_CFG_CLKDIV_Pos ), /*!< APB clock = AHB/4 */
+X    RCC_HCLK_Div4		= ( uint32_t ) ( 0x02 << (20U) ),  
+N    RCC_HCLK_Div8  	= ( uint32_t ) ( 0x03 << AHB_CFG_CLKDIV_Pos ), /*!< APB clock = AHB/8 */
+X    RCC_HCLK_Div8  	= ( uint32_t ) ( 0x03 << (20U) ),  
+N    RCC_HCLK_Div16 	= ( uint32_t ) ( 0x04 << AHB_CFG_CLKDIV_Pos ), /*!< APB clock = AHB/16 */
+X    RCC_HCLK_Div16 	= ( uint32_t ) ( 0x04 << (20U) ),  
+N    RCC_HCLK_Div32 	= ( uint32_t ) ( 0x05 << AHB_CFG_CLKDIV_Pos ), /*!< APB clock = AHB/32 */
+X    RCC_HCLK_Div32 	= ( uint32_t ) ( 0x05 << (20U) ),  
+N    RCC_HCLK_Div64 	= ( uint32_t ) ( 0x06 << AHB_CFG_CLKDIV_Pos ), /*!< APB clock = AHB/64 */
+X    RCC_HCLK_Div64 	= ( uint32_t ) ( 0x06 << (20U) ),  
+N    RCC_HCLK_Div128 = ( uint32_t ) ( 0x07 << AHB_CFG_CLKDIV_Pos ), /*!< APB clock = AHB/128 */
+X    RCC_HCLK_Div128 = ( uint32_t ) ( 0x07 << (20U) ),  
+N} RCC_PCLK_TypeDef;
+N
+N#define IS_RCC_PCLK(PCLK) (((PCLK) == RCC_HCLK_Div1) || \
+N                           ((PCLK) == RCC_HCLK_Div2) || \
+N                           ((PCLK) == RCC_HCLK_Div4) || \
+N                           ((PCLK) == RCC_HCLK_Div8) || \
+N                           ((PCLK) == RCC_HCLK_Div16)|| \
+N                           ((PCLK) == RCC_HCLK_Div32)|| \
+N                           ((PCLK) == RCC_HCLK_Div64)|| \
+N                           ((PCLK) == RCC_HCLK_Div128))
+X#define IS_RCC_PCLK(PCLK) (((PCLK) == RCC_HCLK_Div1) ||                            ((PCLK) == RCC_HCLK_Div2) ||                            ((PCLK) == RCC_HCLK_Div4) ||                            ((PCLK) == RCC_HCLK_Div8) ||                            ((PCLK) == RCC_HCLK_Div16)||                            ((PCLK) == RCC_HCLK_Div32)||                            ((PCLK) == RCC_HCLK_Div64)||                            ((PCLK) == RCC_HCLK_Div128))
+N/**
+N * @}
+N */
+N
+N/** @brief RCC_LCDLEDCLKSource LCDLED clock Source
+N * @{
+N */
+N#if  defined(SC32f12xx)|| defined(SC32f10xx)
+X#if  1L|| 0L
+Ntypedef enum
+N{
+N    RCC_LCDLEDCLKSource_LIRC = ( uint32_t ) ( 0x00 << RCC_CFG1_LCDCLKSEL_Pos ), /*!< LCD_LED clock = LIRC */
+X    RCC_LCDLEDCLKSource_LIRC = ( uint32_t ) ( 0x00 << (1U) ),  
+N    RCC_LCDLEDCLKSource_LXT  = ( uint32_t ) ( 0x01 << RCC_CFG1_LCDCLKSEL_Pos ), /*!< LCD_LED clock = LXT */
+X    RCC_LCDLEDCLKSource_LXT  = ( uint32_t ) ( 0x01 << (1U) ),  
+N} RCC_LCDLEDCLKSource_TypeDef;
+N
+N#define RCC_LCDLEDCLKSOURCE(SOURCE) (((SOURCE) == RCC_LCDLEDCLKSource_LIRC) || \
+N																		((SOURCE) == RCC_LCDLEDCLKSource_LXT))
+X#define RCC_LCDLEDCLKSOURCE(SOURCE) (((SOURCE) == RCC_LCDLEDCLKSource_LIRC) || 																		((SOURCE) == RCC_LCDLEDCLKSource_LXT))
+N#endif
+N/**
+N * @}
+N */
+N
+N/** @brief RCC_BTMCLKSource BTM clock Source
+N* @{
+N*/
+Ntypedef enum
+N{
+N    RCC_BTMCLKSource_LIRC = ( uint32_t ) ( 0x00 << RCC_CFG1_BTMCLKSEL_Pos ), /*!< BTM clock = LIRC */
+X    RCC_BTMCLKSource_LIRC = ( uint32_t ) ( 0x00 << (0U) ),  
+N    RCC_BTMCLKSource_LXT  = ( uint32_t ) ( 0x01 << RCC_CFG1_BTMCLKSEL_Pos ), /*!< BTM clock = LXT */
+X    RCC_BTMCLKSource_LXT  = ( uint32_t ) ( 0x01 << (0U) ),  
+N} RCC_BTMCLKSource_TypeDef;
+N
+N#define RCC_BTMCLKSOURCE(SOURCE) (((SOURCE) == RCC_BTMCLKSource_LIRC) || \
+N                                  ((SOURCE) == RCC_BTMCLKSource_LXT))
+X#define RCC_BTMCLKSOURCE(SOURCE) (((SOURCE) == RCC_BTMCLKSource_LIRC) ||                                   ((SOURCE) == RCC_BTMCLKSource_LXT))
+N
+N/**
+N * @}
+N */
+N#if defined(SC32f10xx)
+X#if 0L
+S/** @brief RCC_PLLCLKSource PLL clock Source
+S* @{
+S*/
+Stypedef enum
+S{
+S    RCC_PLLCLKSource_HIRC  = ( uint32_t ) ( 0x00 << PLL_CFG_PLLCLKSEL_Pos ), /*!< PLL clock = HIRC */
+S    RCC_PLLCLKSource_HXT   = ( uint32_t ) ( 0x01 << PLL_CFG_PLLCLKSEL_Pos ), /*!< PLL clock = HXT */
+S} RCC_PLLCLKSource_TypeDef;
+S
+S#define RCC_PLLCLKSOURCE(SOURCE) (((SOURCE) == RCC_PLLCLKSource_HXT) || \
+S                                  ((SOURCE) == RCC_PLLCLKSource_HIRC))
+X#define RCC_PLLCLKSOURCE(SOURCE) (((SOURCE) == RCC_PLLCLKSource_HXT) ||                                   ((SOURCE) == RCC_PLLCLKSource_HIRC))
+S/**
+S * @}
+S */
+N#endif
+N/** @defgroup RCC_PWM0CLKSELSource PWM0 clock Source
+N * @{
+N */
+N
+N
+N#if defined(SC32f12xx)
+X#if 1L
+Ntypedef enum
+N{
+N    RCC_PWM0CLKSource_PCLK = ( uint32_t ) ( 0x00 << RCC_CFG1_PWM0CLKSEL_Pos ), /*!< PWM0 clock = PCLK */
+X    RCC_PWM0CLKSource_PCLK = ( uint32_t ) ( 0x00 << (2U) ),  
+N    RCC_PWM0CLKSource_Div1HIRC = ( uint32_t ) ( 0x01 << RCC_CFG1_PWM0CLKSEL_Pos ), /*!< PWM0 clock = HIRC */
+X    RCC_PWM0CLKSource_Div1HIRC = ( uint32_t ) ( 0x01 << (2U) ),  
+N} RCC_PWM0CLKSource_TypeDef;
+N
+N#define RCC_PWM0CLKSOURCE(SOURCE) (((SOURCE) == RCC_PWM0CLKSource_PCLK) || \
+N                                   ((SOURCE) == RCC_PWM0CLKSource_Div1HIRC))
+X#define RCC_PWM0CLKSOURCE(SOURCE) (((SOURCE) == RCC_PWM0CLKSource_PCLK) ||                                    ((SOURCE) == RCC_PWM0CLKSource_Div1HIRC))
+N#elif defined(SC32f10xx)
+Stypedef enum
+S{
+S    RCC_PWM0CLKSource_PCLK = ( uint32_t ) ( 0x00 << RCC_CFG1_PWM0CLKSEL_Pos ), /*!< PWM0 clock = PCLK */
+S    RCC_PWM0CLKSource_PLLQ = ( uint32_t ) ( 0x01 << RCC_CFG1_PWM0CLKSEL_Pos ), /*!< PWM0 clock = PLL */
+S} RCC_PWM0CLKSource_TypeDef;
+S
+S#define RCC_PWM0CLKSOURCE(SOURCE) (((SOURCE) == RCC_PWM0CLKSource_PCLK) || \
+S                                   ((SOURCE) == RCC_PWM0CLKSource_PLLQ))
+X#define RCC_PWM0CLKSOURCE(SOURCE) (((SOURCE) == RCC_PWM0CLKSource_PCLK) ||                                    ((SOURCE) == RCC_PWM0CLKSource_PLLQ))
+N#endif
+N/**
+N * @}
+N */
+N/** @brief RCC_AHBPeriph AHB Periph
+N * @{
+N */
+N#if defined(SC32f10xx) || defined(SC32f12xx)
+X#if 0L || 1L
+Ntypedef enum
+N{
+N    RCC_AHBPeriph_DMA = ( uint8_t ) AHB_CFG_DMAEN,
+X    RCC_AHBPeriph_DMA = ( uint8_t ) (0x1UL << (0U)),
+N    RCC_AHBPeriph_CRC = ( uint8_t ) AHB_CFG_CRCEN,
+X    RCC_AHBPeriph_CRC = ( uint8_t ) (0x1UL << (1U)),
+N    RCC_AHBPeriph_IFB = ( uint8_t ) AHB_CFG_IFBEN,
+X    RCC_AHBPeriph_IFB = ( uint8_t ) (0x1UL << (2U)),
+N    RCC_AHBPeriph_ALL = ( uint8_t ) 0X07,
+N} RCC_AHBPeriph_TypeDef;
+N#define IS_RCC_AHBPERIPH(PERIPH) ((((PERIPH) & (uint8_t)0xF8) == 0x00) && ((PERIPH) != (uint8_t)0x00))
+N
+N#endif
+N/**
+N * @}
+N */
+N
+N/** @brief RCC_APB0Periph APB0 Periph
+N* @{
+N*/
+N#if defined(SC32f10xx)
+X#if 0L
+Stypedef enum
+S{
+S    RCC_APB0Periph_TIM0  = ( uint16_t ) APB0_CFG_TIM0EN,
+S    RCC_APB0Periph_TIM1  = ( uint16_t ) APB0_CFG_TIM1EN,
+S    RCC_APB0Periph_TIM2  = ( uint16_t ) APB0_CFG_TIM2EN,
+S    RCC_APB0Periph_TIM3  = ( uint16_t ) APB0_CFG_TIM3EN,
+S    RCC_APB0Periph_TWI0  = ( uint16_t ) APB0_CFG_TWI0EN,
+S    RCC_APB0Periph_SPI0  = ( uint16_t ) APB0_CFG_SPI0EN,
+S    RCC_APB0Periph_UART0 = ( uint16_t ) APB0_CFG_UART0EN,
+S    RCC_APB0Periph_UART1 = ( uint16_t ) APB0_CFG_UART1EN,
+S    RCC_APB0Periph_PWM0  = ( uint16_t ) APB0_CFG_PWM0EN,
+S    RCC_APB0Periph_ALL   = ( uint16_t ) 0X01FF,
+S} RCC_APB0Periph_TypeDef;
+S#define IS_RCC_APB0PERIPH(PERIPH) ((((PERIPH) & (uint8_t)0xFE00) == 0x00) && ((PERIPH) != (uint16_t)0x00))
+S
+S
+N#elif  defined(SC32f12xx)
+X#elif  1L
+Ntypedef enum
+N{
+N    RCC_APB0Periph_TIM0  = ( uint16_t ) APB0_CFG_TIM0EN,
+X    RCC_APB0Periph_TIM0  = ( uint16_t ) (0x1UL << (0U)),
+N    RCC_APB0Periph_TIM1  = ( uint16_t ) APB0_CFG_TIM1EN,
+X    RCC_APB0Periph_TIM1  = ( uint16_t ) (0x1UL << (1U)),
+N    RCC_APB0Periph_TIM2  = ( uint16_t ) APB0_CFG_TIM2EN,
+X    RCC_APB0Periph_TIM2  = ( uint16_t ) (0x1UL << (2U)),
+N    RCC_APB0Periph_TIM3  = ( uint16_t ) APB0_CFG_TIM3EN,
+X    RCC_APB0Periph_TIM3  = ( uint16_t ) (0x1UL << (3U)),
+N    RCC_APB0Periph_TWI0  = ( uint16_t ) APB0_CFG_TWI0EN,
+X    RCC_APB0Periph_TWI0  = ( uint16_t ) (0x1UL << (4U)),
+N    RCC_APB0Periph_SPI0  = ( uint16_t ) APB0_CFG_SPI0EN,
+X    RCC_APB0Periph_SPI0  = ( uint16_t ) (0x1UL << (5U)),
+N    RCC_APB0Periph_UART0 = ( uint16_t ) APB0_CFG_UART0EN,
+X    RCC_APB0Periph_UART0 = ( uint16_t ) (0x1UL << (6U)),
+N    RCC_APB0Periph_UART1 = ( uint16_t ) APB0_CFG_UART1EN,
+X    RCC_APB0Periph_UART1 = ( uint16_t ) (0x1UL << (7U)),
+N    RCC_APB0Periph_PWM0  = ( uint16_t ) APB0_CFG_PWM0EN,
+X    RCC_APB0Periph_PWM0  = ( uint16_t ) (0x1UL << (8U)),
+N    RCC_APB0Periph_UART5 = ( uint16_t ) APB0_CFG_UART5EN,
+X    RCC_APB0Periph_UART5 = ( uint16_t ) (0x1UL << (9U)),
+N    RCC_APB0Periph_ALL   = ( uint16_t ) 0X03FF,
+N} RCC_APB0Periph_TypeDef;
+N#define IS_RCC_APB0PERIPH(PERIPH) ((((PERIPH) & (uint8_t)0xFC00) == 0x00) && ((PERIPH) != (uint16_t)0x00))
+N
+N
+N
+N
+N#endif
+N
+N/**
+N * @}
+N */
+N
+N/** @brief RCC_APB1Periph APB1 Periph
+N* @{
+N*/
+N#if defined(SC32f10xx)
+X#if 0L
+Stypedef enum
+S{
+S    RCC_APB1Periph_TIM4  = ( uint16_t ) APB1_CFG_TIM4EN,
+S    RCC_APB1Periph_TIM5  = ( uint16_t ) APB1_CFG_TIM5EN,
+S    RCC_APB1Periph_TIM6  = ( uint16_t ) APB1_CFG_TIM6EN,
+S    RCC_APB1Periph_TIM7  = ( uint16_t ) APB1_CFG_TIM7EN,
+S    RCC_APB1Periph_TWI1  = ( uint16_t ) APB1_CFG_TWI1EN,
+S    RCC_APB1Periph_UART2  = ( uint16_t ) APB1_CFG_UART2EN,
+S    RCC_APB1Periph_ALL   = ( uint16_t ) 0X009F,
+S} RCC_APB1Periph_TypeDef;
+S#define IS_RCC_APB1PERIPH(PERIPH) ((((PERIPH) & (uint8_t)0xFF60) == 0x00) && ((PERIPH) != (uint16_t)0x00))
+S
+S
+S
+N#elif defined(SC32f12xx)
+X#elif 1L
+Ntypedef enum
+N{
+N    RCC_APB1Periph_TIM4  = ( uint16_t ) APB1_CFG_TIM4EN,
+X    RCC_APB1Periph_TIM4  = ( uint16_t ) (0x1UL << (0U)),
+N    RCC_APB1Periph_TIM5  = ( uint16_t ) APB1_CFG_TIM5EN,
+X    RCC_APB1Periph_TIM5  = ( uint16_t ) (0x1UL << (1U)),
+N    RCC_APB1Periph_TIM6  = ( uint16_t ) APB1_CFG_TIM6EN,
+X    RCC_APB1Periph_TIM6  = ( uint16_t ) (0x1UL << (2U)),
+N    RCC_APB1Periph_TIM7  = ( uint16_t ) APB1_CFG_TIM7EN,
+X    RCC_APB1Periph_TIM7  = ( uint16_t ) (0x1UL << (3U)),
+N    RCC_APB1Periph_TWI1  = ( uint16_t ) APB1_CFG_TWI1EN,
+X    RCC_APB1Periph_TWI1  = ( uint16_t ) (0x1UL << (4U)),
+N    RCC_APB1Periph_SPI1  = ( uint16_t ) APB1_CFG_SPI1EN,
+X    RCC_APB1Periph_SPI1  = ( uint16_t ) (0x1UL << (5U)),
+N    RCC_APB1Periph_UART4  = ( uint16_t ) APB1_CFG_UART4EN,
+X    RCC_APB1Periph_UART4  = ( uint16_t ) (0x1UL << (6U)),
+N    RCC_APB1Periph_UART2  = ( uint16_t ) APB1_CFG_UART2EN,
+X    RCC_APB1Periph_UART2  = ( uint16_t ) (0x1UL << (7U)),
+N    RCC_APB1Periph_SPI2  = ( uint16_t ) APB1_CFG_SPI2EN,
+X    RCC_APB1Periph_SPI2  = ( uint16_t ) (0x1UL << (8U)),
+N    RCC_APB1Periph_ALL   = ( uint16_t ) 0X01FF,
+N} RCC_APB1Periph_TypeDef;
+N#define IS_RCC_APB1PERIPH(PERIPH) ((((PERIPH) & (uint8_t)0xFE00) == 0x00) && ((PERIPH) != (uint16_t)0x00))
+N
+N
+N#endif
+N/**
+N * @}
+N */
+N
+N/** @brief RCC_APB2Periph APB2 Periph
+N* @{
+N*/
+N#if defined(SC32f10xx) ||  defined(SC32f12xx)
+X#if 0L ||  1L
+Ntypedef enum
+N{
+N    RCC_APB2Periph_LEDPWM   = ( uint16_t ) APB2_CFG_LEDPWMEN,
+X    RCC_APB2Periph_LEDPWM   = ( uint16_t ) (0x1UL << (0U)),
+N    RCC_APB2Periph_LCD_LED  = ( uint16_t ) APB2_CFG_LCDEN,
+X    RCC_APB2Periph_LCD_LED  = ( uint16_t ) (0x1UL << (1U)),
+N    RCC_APB2Periph_UART3    = ( uint16_t ) APB2_CFG_UART3EN,
+X    RCC_APB2Periph_UART3    = ( uint16_t ) (0x1UL << (2U)),
+N    RCC_APB2Periph_ALL      = ( uint16_t ) 0X0007,
+N} RCC_APB2Periph_TypeDef;
+N#define IS_RCC_APB2PERIPH(PERIPH) ((((PERIPH) & (uint8_t)0xFFF8) == 0x00) && ((PERIPH) != (uint16_t)0x00))
+N
+N#endif
+N/**
+N * @}
+N */
+N/** @defgroup NMI_CFG Periph NMI Periph
+N* @{
+N*/
+N#if defined(SC32f10xx) ||  defined(SC32f12xx)
+X#if 0L ||  1L
+Ntypedef enum
+N{
+N    RCC_NMIPeriph_CSS = ( uint16_t ) NMI_CFG_CSSEN,
+X    RCC_NMIPeriph_CSS = ( uint16_t ) (0x1UL << (0U)),
+N    RCC_NMIPeriph_CMP = ( uint16_t ) NMI_CFG_CMPEN,
+X    RCC_NMIPeriph_CMP = ( uint16_t ) (0x1UL << (1U)),
+N    RCC_NMIPeriph_INT0    = ( uint16_t ) NMI_CFG_INT0EN,
+X    RCC_NMIPeriph_INT0    = ( uint16_t ) (0x1UL << (2U)),
+N#if  defined(SC32f12xx)
+X#if  1L
+N    RCC_NMIPeriph_SRAMPE      = ( uint16_t ) NMI_CFG_SRAMPEEN,
+X    RCC_NMIPeriph_SRAMPE      = ( uint16_t ) (0x1UL << (3U)),
+N#endif
+N    RCC_NMIPeriph_ALL  = ( uint16_t ) 0X0F,
+N} RCC_NMIPeriph_TypeDef;
+N#define IS_RCC_NMIPeriph(NMIPeriph) ((((NMIPeriph) & (uint8_t)0xFF00) == 0x00) && ((NMIPeriph) != (uint16_t)0x00))
+N
+N#endif
+N
+N
+Ntypedef enum
+N{
+N    RCC_WAIT_0 = ( uint16_t ) 0x00 << RCC_CFG0_WAIT_Pos, /*!< Wait number selection 0 */
+X    RCC_WAIT_0 = ( uint16_t ) 0x00 << (12U),  
+N    RCC_WAIT_1 = ( uint16_t ) 0x01 << RCC_CFG0_WAIT_Pos, /*!< Wait number selection 1 */
+X    RCC_WAIT_1 = ( uint16_t ) 0x01 << (12U),  
+N    RCC_WAIT_2 = ( uint16_t ) 0x02 << RCC_CFG0_WAIT_Pos, /*!< Wait number selection 2 */
+X    RCC_WAIT_2 = ( uint16_t ) 0x02 << (12U),  
+N    RCC_WAIT_3 = ( uint16_t ) 0x03 << RCC_CFG0_WAIT_Pos, /*!< Wait number selection 3 */
+X    RCC_WAIT_3 = ( uint16_t ) 0x03 << (12U),  
+N} RCC_Wait_TypeDef;
+N#define IS_RCC_Wait(Wait) (((Wait) == RCC_WAIT_0) ||  \
+N                           ((Wait) == RCC_WAIT_1)||\
+N                           ((Wait) == RCC_WAIT_2)||\
+N                           ((Wait) == RCC_WAIT_3))
+X#define IS_RCC_Wait(Wait) (((Wait) == RCC_WAIT_0) ||                             ((Wait) == RCC_WAIT_1)||                           ((Wait) == RCC_WAIT_2)||                           ((Wait) == RCC_WAIT_3))
+N/** @brief RCC_FLAG RCC FLAG
+N* @{
+N*/
+N#if defined(SC32f10xx)
+X#if 0L
+Stypedef enum
+S{
+S    RCC_FLAG_CLKIF   = ( uint8_t ) RCC_STS_CLKFIF, /*!< RCC FLAG: Clock source exception flag */
+S    RCC_FLAG_LOCKERR = ( uint8_t ) RCC_STS_LOCKERR, /*!< RCC FLAG: PLL out-of-lock record flag */
+S    RCC_FLAG_PLLRDY  = ( uint8_t ) RCC_STS_PLLRDY, /*!< RCC FLAG: PLL Clock Ready Flag */
+S} RCC_FLAG_TypeDef;
+S
+S#define IS_RCC_FLAG(FLAG) ((((FLAG) & (uint8_t)0xFFF8) == 0x00) && ((FLAG) != (uint16_t)0x00))
+S#define IS_GET_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_CLKIF) ||  \
+S                               ((FLAG) == RCC_FLAG_LOCKERR) || \
+S                               ((FLAG) == RCC_FLAG_PLLRDY))
+X#define IS_GET_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_CLKIF) ||                                 ((FLAG) == RCC_FLAG_LOCKERR) ||                                ((FLAG) == RCC_FLAG_PLLRDY))
+N#elif    defined(SC32f12xx) 
+X#elif    1L 
+Ntypedef enum
+N{
+N	#if   defined(SC32f12xx)
+X	#if   1L
+N    RCC_FLAG_CLKIF   = ( uint8_t ) RCC_STS_CLKFIF, /*!< CLKIF FLAG: Clock source exception flag */
+X    RCC_FLAG_CLKIF   = ( uint8_t ) (0x1UL << (0U)),  
+N	#endif
+N    RCC_FLAG_SRAMPEIF = ( uint8_t ) RCC_STS_SRAMPEIF, /*!< SRAMPEIF FLAG: SRAM parity error flag */
+X    RCC_FLAG_SRAMPEIF = ( uint8_t ) (0x1UL << (3U)),  
+N} RCC_FLAG_TypeDef;
+N#if    defined(SC32f12xx)
+X#if    1L
+N#define IS_RCC_FLAG(FLAG) ((((FLAG) & (uint8_t)0xFFF6) == 0x00) && ((FLAG) != (uint16_t)0x00))
+N#define IS_GET_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_CLKIF) ||  \
+N                               ((FLAG) == RCC_FLAG_SRAMPEIF))
+X#define IS_GET_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_CLKIF) ||                                 ((FLAG) == RCC_FLAG_SRAMPEIF))
+N
+N#endif
+N#endif
+N/**
+N * @}
+N */
+N#if defined(SC32f10xx)
+X#if 0L
+S/** @defgroup RLL_Factor  RLL Factor
+S * @{
+S */
+S/** @brief RLL_Factor  RLL Factor
+S * @{
+S */
+S
+Stypedef struct
+S{
+S    uint32_t PLLM; /*!<	Prescaler M */
+S    uint32_t PLLN; /*!< PLL multiplication factor N */
+S    uint32_t PLLP; /*!< PLLRCLK Clock output dividing Coefficient */
+S} RLL_Factor_TypeDef;
+N#endif
+N
+N/** @brief RCC_ClocksTypeDef
+N * @{
+N */
+N
+Ntypedef struct
+N{
+N    uint32_t SYSCLK_Frequency; /*!<  SYSCLK clock frequency expressed in Hz */
+N    uint32_t HCLK_Frequency;   /*!<  HCLK clock frequency expressed in Hz   */
+N    uint32_t PCLK0_Frequency;  /*!<  PCLK0 clock frequency expressed in Hz  */
+N    uint32_t PCLK1_Frequency;  /*!<  PCLK1 clock frequency expressed in Hz  */
+N    uint32_t PCLK2_Frequency;  /*!<  PCLK2 clock frequency expressed in Hz  */
+N} RCC_ClocksTypeDef;
+N
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N/* End of struct -----------------------------------------------------*/
+N
+N
+N/* Configuration of the RCC computation unit **********************************/
+Nvoid RCC_DeInit ( void );
+N
+N/* Internal/external clocks, PLL configuration functions *********/
+N
+NErrorStatus RCC_Unlock ( uint8_t TimeLimit );
+N
+N
+Nvoid RCC_HXTCmd ( FunctionalState NewState );
+N
+Nvoid RCC_LXTCmd ( FunctionalState NewState );
+Nvoid RCC_HIRCCmd ( FunctionalState NewState );
+Nvoid RCC_LIRCCmd ( FunctionalState NewState );
+N
+N#if defined(SC32f10xx)
+X#if 0L
+Svoid RCC_PLLCmd ( FunctionalState NewState );
+Svoid RCC_PLLRCmd ( FunctionalState NewState );
+Svoid RCC_PLLConfig ( RCC_PLLCLKSource_TypeDef RCC_PLLCLKSource, RLL_Factor_TypeDef* PLL_Factor );
+N#endif
+N#if defined(SC32f12xx)
+X#if 1L
+Nvoid RCC_HIRCDIV1Cmd ( FunctionalState NewState );
+N#endif
+Nvoid RCC_APB0Cmd ( FunctionalState NewState );
+Nvoid RCC_APB1Cmd ( FunctionalState NewState );
+Nvoid RCC_APB2Cmd ( FunctionalState NewState );
+N
+N
+N/* System, AHB and APB busses clocks configuration functions ******************/
+NErrorStatus RCC_SYSCLKConfig ( RCC_SYSCLKSource_TypeDef RCC_SYSCLKSource );
+NRCC_SYSCLKSource_TypeDef RCC_GetSYSCLKSource ( void );
+Nvoid RCC_HCLKConfig ( RCC_HCLK_TypeDef RCC_HCLKCLKSource );
+Nvoid RCC_APB0Config ( RCC_PCLK_TypeDef RCC_APB0CLKSource );
+Nvoid RCC_APB1Config ( RCC_PCLK_TypeDef RCC_APB1CLKSource );
+Nvoid RCC_APB2Config ( RCC_PCLK_TypeDef RCC_APB2CLKSource );
+Nvoid RCC_GetClocksFreq ( RCC_ClocksTypeDef* RCC_Clocks );
+Nvoid RCC_WaitConfig ( RCC_Wait_TypeDef RCC_Wait );
+Nvoid RCC_NMICmd ( uint32_t RCC_NMIPeriph, FunctionalState NewState );
+N/* Peripheral clocks configuration functions **********************************/
+N#if  defined(SC32f12xx)
+X#if  1L
+Nvoid RCC_PWM0CLKConfig ( RCC_PWM0CLKSource_TypeDef RCC_PWM0CLKSource );
+N#endif
+N#if  defined(SC32f12xx)|| defined(SC32f10xx)
+X#if  1L|| 0L
+Nvoid RCC_LCDLEDCLKConfig ( RCC_LCDLEDCLKSource_TypeDef RCC_LCDLEDCLKSource );
+N#endif
+Nvoid RCC_BTMCLKConfig ( RCC_BTMCLKSource_TypeDef RCC_BTMCLKSource );
+N
+Nvoid RCC_AHBPeriphClockCmd ( uint32_t RCC_AHBPeriph, FunctionalState NewState );
+Nvoid RCC_APB0PeriphClockCmd ( uint32_t RCC_APB0Periph, FunctionalState NewState );
+Nvoid RCC_APB1PeriphClockCmd ( uint32_t RCC_APB1Periph, FunctionalState NewState );
+Nvoid RCC_APB2PeriphClockCmd ( uint32_t RCC_APB2Periph, FunctionalState NewState );
+N
+Nvoid RCC_AHBPeriphResetCmd ( uint32_t RCC_AHBPeriph, FunctionalState NewState );
+Nvoid RCC_APB0PeriphResetCmd ( uint32_t RCC_APB0Periph, FunctionalState NewState );
+Nvoid RCC_APB1PeriphResetCmd ( uint32_t RCC_APB1Periph, FunctionalState NewState );
+Nvoid RCC_APB2PeriphResetCmd ( uint32_t RCC_APB2Periph, FunctionalState NewState );
+N
+N/* Systick Timer configuration functions **********************************/
+Nvoid RCC_SystickCLKConfig ( RCC_SysTickSource_TypeDef RCC_SYSTICKSource );
+Nvoid RCC_SystickSetCounter ( uint32_t Counter );
+Nvoid RCC_SystickCmd ( FunctionalState NewState );
+NFlagStatus RCC_SystickGetFlagStatus ( void );
+N
+N/* Interrupts and flags management functions **********************************/
+Nvoid RCC_ITConfig ( FunctionalState NewState );
+NFlagStatus RCC_GetFlagStatus ( uint32_t RCC_FLAG );
+N
+N/* Microsecond and millisecond delay functions ********************************/
+Nvoid SC_IncTick(void);
+Nvoid SC_Delay(uint32_t ms_Delay);
+Nvoid SC_Delay_us(uint32_t us_Delay,uint32_t Sys_freq);
+N
+N#ifdef __cplusplus
+S}
+N#endif
+N
+N#endif /* __sc32f1xxx_RCC_H */
+N
+N/**
+N* @}
+N*/
+N
+N/**
+N* @}
+N*/
+N
+N/************************ (C) COPYRIGHT SOC Microelectronics *****END OF FILE****/
+N
+L 39 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_pwm.h" 2
+N
+N/** @addtogroup SC32f10xx_StdPeriph_Driver
+N * @{
+N */
+N
+N/** @addtogroup PWM
+N * @{
+N */
+N
+N/** @defgroup PWM_Enumerations PWM Enumerations
+N * @{
+N */
+N
+N/** @brief PWM_Prescaler PWM Prescaler
+N * @{
+N */
+Ntypedef enum
+N{
+N    PWM_PRESCALER_DIV1	 = ( uint16_t ) ( 0x00U << PWM_CON_PWMCLK_Pos ),	/*!< Clock division: Fsource/1    */
+X    PWM_PRESCALER_DIV1	 = ( uint16_t ) ( 0x00U << (0U) ),	 
+N    PWM_PRESCALER_DIV2	 = ( uint16_t ) ( 0x01U << PWM_CON_PWMCLK_Pos ),	/*!< Clock division: Fsource/2    */
+X    PWM_PRESCALER_DIV2	 = ( uint16_t ) ( 0x01U << (0U) ),	 
+N    PWM_PRESCALER_DIV4	 = ( uint16_t ) ( 0x02U << PWM_CON_PWMCLK_Pos ),	/*!< Clock division: Fsource/4    */
+X    PWM_PRESCALER_DIV4	 = ( uint16_t ) ( 0x02U << (0U) ),	 
+N    PWM_PRESCALER_DIV8	 = ( uint16_t ) ( 0x03U << PWM_CON_PWMCLK_Pos ),	/*!< Clock division: Fsource/8    */
+X    PWM_PRESCALER_DIV8	 = ( uint16_t ) ( 0x03U << (0U) ),	 
+N    PWM_PRESCALER_DIV16	 = ( uint16_t ) ( 0x04U << PWM_CON_PWMCLK_Pos ),	/*!< Clock division: Fsource/16    */
+X    PWM_PRESCALER_DIV16	 = ( uint16_t ) ( 0x04U << (0U) ),	 
+N    PWM_PRESCALER_DIV32	 = ( uint16_t ) ( 0x05U << PWM_CON_PWMCLK_Pos ),	/*!< Clock division: Fsource/32    */
+X    PWM_PRESCALER_DIV32	 = ( uint16_t ) ( 0x05U << (0U) ),	 
+N    PWM_PRESCALER_DIV64	 = ( uint16_t ) ( 0x06U << PWM_CON_PWMCLK_Pos ),	/*!< Clock division: Fsource/64    */
+X    PWM_PRESCALER_DIV64	 = ( uint16_t ) ( 0x06U << (0U) ),	 
+N    PWM_PRESCALER_DIV128 = ( uint16_t ) ( 0x07U << PWM_CON_PWMCLK_Pos ), /*!< Clock division: Fsource/128    */
+X    PWM_PRESCALER_DIV128 = ( uint16_t ) ( 0x07U << (0U) ),  
+N} PWM_Prescaler_TypeDef;
+N
+N#define IS_PWM_PRESCALER(PRESCALER) (((PRESCALER) == PWM_PRESCALER_DIV1) ||   \
+N																		 ((PRESCALER) == PWM_PRESCALER_DIV2) ||   \
+N																		 ((PRESCALER) == PWM_PRESCALER_DIV4) ||   \
+N																		 ((PRESCALER) == PWM_PRESCALER_DIV8) ||   \
+N																		 ((PRESCALER) == PWM_PRESCALER_DIV16) ||  \
+N																		 ((PRESCALER) == PWM_PRESCALER_DIV32) ||  \
+N																		 ((PRESCALER) == PWM_PRESCALER_DIV64) ||  \
+N																		 ((PRESCALER) == PWM_PRESCALER_DIV128) || \
+N																		 ((PRESCALER) == PWM_PRESCALER_DIV256))
+X#define IS_PWM_PRESCALER(PRESCALER) (((PRESCALER) == PWM_PRESCALER_DIV1) ||   																		 ((PRESCALER) == PWM_PRESCALER_DIV2) ||   																		 ((PRESCALER) == PWM_PRESCALER_DIV4) ||   																		 ((PRESCALER) == PWM_PRESCALER_DIV8) ||   																		 ((PRESCALER) == PWM_PRESCALER_DIV16) ||  																		 ((PRESCALER) == PWM_PRESCALER_DIV32) ||  																		 ((PRESCALER) == PWM_PRESCALER_DIV64) ||  																		 ((PRESCALER) == PWM_PRESCALER_DIV128) || 																		 ((PRESCALER) == PWM_PRESCALER_DIV256))
+N/**
+N * @}
+N */
+N
+N/** @brief PWM_AlignedMode PWM AlignedMode
+N * @{
+N */
+Ntypedef enum
+N{
+N    PWM_AlignmentMode_Edge	 = ( uint16_t ) ( 0x00U << PWM_CON_PWMMD0_Pos ),	 /*!< Edge Alignment mode */
+X    PWM_AlignmentMode_Edge	 = ( uint16_t ) ( 0x00U << (6U) ),	  
+N    PWM_AlignmentMode_Center = ( uint16_t ) ( 0x01U << PWM_CON_PWMMD0_Pos ), /*!< Center Alignment mode */
+X    PWM_AlignmentMode_Center = ( uint16_t ) ( 0x01U << (6U) ),  
+N} PWM_AlignedMode_TypeDef;
+N
+N#define IS_PWM_AlignedMode(MODE) (((MODE) == PWM_AlignmentMode_Edge) || \
+N																	((MODE) == PWM_AlignmentMode_Center))
+X#define IS_PWM_AlignedMode(MODE) (((MODE) == PWM_AlignmentMode_Edge) || 																	((MODE) == PWM_AlignmentMode_Center))
+N/**
+N * @}
+N */
+N
+N/** @brief PWM_WordMode PWM WordMode
+N * @{
+N */
+Ntypedef enum
+N{
+N    PWM_WorkMode_Independent		= ( uint16_t ) ( 0x00U << PWM_CON_PWMMD1_Pos ),	 /*!< Independent working mode */
+X    PWM_WorkMode_Independent		= ( uint16_t ) ( 0x00U << (5U) ),	  
+N    PWM_WorkMode_Complementary	= ( uint16_t ) ( 0x01U << PWM_CON_PWMMD1_Pos ), /*!< Complementary working mode*/
+X    PWM_WorkMode_Complementary	= ( uint16_t ) ( 0x01U << (5U) ),  
+N} PWM_WorkMode_TypeDef;
+N
+N#define IS_PWM_WORKMode(MODE)	(((MODE) == PWM_Mode_Independent) || \
+N															((MODE) == PWM_Mode_Complementary))
+X#define IS_PWM_WORKMode(MODE)	(((MODE) == PWM_Mode_Independent) || 															((MODE) == PWM_Mode_Complementary))
+N/**
+N * @}
+N */
+N
+N/** @brief PWM_Channel PWM Channel
+N * @{
+N */
+Ntypedef enum
+N{
+N    PWMChannel_Less = 0x00000000UL, /*!< No channels are selected */
+N    PWM_Channel_0 = ( int32_t ) 0x00000001UL,	/*!< PMW output channel 0 */
+N    PWM_Channel_1 = ( int32_t ) 0x00000002UL,	/*!< PMW output channel 1 */
+N    PWM_Channel_2 = ( int32_t ) 0x00000004UL,	/*!< PMW output channel 2 */
+N    PWM_Channel_3 = ( int32_t ) 0x00000008UL,	/*!< PMW output channel 3 */
+N    PWM_Channel_4 = ( int32_t ) 0x00000010UL,	/*!< PMW output channel 4 */
+N    PWM_Channel_5 = ( int32_t ) 0x00000020UL,	/*!< PMW output channel 5 */
+N    PWM_Channel_6 = ( int32_t ) 0x00000040UL,	/*!< PMW output channel 6 */
+N    PWM_Channel_7 = ( int32_t ) 0x00000080UL,	/*!< PMW output channel 7 */
+N    PWM_Channel_All = ( int32_t ) 0x000000FFUL, /*!< PMW output channel ALL */
+N} PWM_Channel_Typedef;
+N
+N#define IS_PWM_CHANNEL(CHANNEL) (((CHANNEL) & (uint32_t)0xFFFFFF00) == 0x00)
+N/**
+N * @}
+N */
+N
+N/** @brief PWM_FDMode PWM FDMode
+N * @{
+N */
+Ntypedef enum
+N{
+N    PWM_FDMode_Latch		 = ( uint16_t ) ( 0x00U << PWM_FLT_FLTMD_Pos ),	/*!< PWM fault detection mode: Latch mode */
+X    PWM_FDMode_Latch		 = ( uint16_t ) ( 0x00U << (5U) ),	 
+N    PWM_FDMode_Immediate = ( uint16_t ) ( 0x01U << PWM_FLT_FLTMD_Pos ), /*!< PWM fault detection mode: Immediate mode */
+X    PWM_FDMode_Immediate = ( uint16_t ) ( 0x01U << (5U) ),  
+N} PWM_FDMode_TypeDef;
+N
+N#define IS_PWM_FDMODE(MODE) (((MODE) == PWM_FDMode_Latch) || \
+N														 ((MODE) == PWM_FDMode_Immediate))
+X#define IS_PWM_FDMODE(MODE) (((MODE) == PWM_FDMode_Latch) || 														 ((MODE) == PWM_FDMode_Immediate))
+N/**
+N * @}
+N */
+N
+N/** @brief PWM_FDVoltage PWM FDVoltage
+N * @{
+N */
+Ntypedef enum
+N{
+N    PWM_FDVoltage_Low		= ( uint16_t ) ( 0x00U << PWM_FLT_FLTTV_Pos ),	 /*!< PWM fault detection Voltage:Low level */
+X    PWM_FDVoltage_Low		= ( uint16_t ) ( 0x00U << (4U) ),	  
+N    PWM_FDVoltage_High	= ( uint16_t ) ( 0x01U << PWM_FLT_FLTTV_Pos ), /*!< PWM fault detection Voltage:High level */
+X    PWM_FDVoltage_High	= ( uint16_t ) ( 0x01U << (4U) ),  
+N} PWM_FDVoltage_TypeDef;
+N
+N#define IS_PWM_FDVOLTAGE(VOLTAGE) (((VOLTAGE) == PWM_FDVoltage_Low) || \
+N																	 ((VOLTAGE) == PWM_FDVoltage_High))
+X#define IS_PWM_FDVOLTAGE(VOLTAGE) (((VOLTAGE) == PWM_FDVoltage_Low) || 																	 ((VOLTAGE) == PWM_FDVoltage_High))
+N/**
+N * @}
+N */
+N
+N/** @brief PWM_FDFilteringTime PWM FDFilteringTime
+N * @{
+N */
+Ntypedef enum
+N{
+N    PWM_FilteringTime_0us		= ( uint16_t ) ( 0x00U << PWM_FLT_FLTDT_Pos ),	/*!< PWM fault detection input signal filtering time is 0us */
+X    PWM_FilteringTime_0us		= ( uint16_t ) ( 0x00U << (0U) ),	 
+N    PWM_FilteringTime_1us		= ( uint16_t ) ( 0x01U << PWM_FLT_FLTDT_Pos ),	/*!< PWM fault detection input signal filtering time is 1us */
+X    PWM_FilteringTime_1us		= ( uint16_t ) ( 0x01U << (0U) ),	 
+N    PWM_FilteringTime_4us		= ( uint16_t ) ( 0x02U << PWM_FLT_FLTDT_Pos ),	/*!< PWM fault detection input signal filtering time is 4us */
+X    PWM_FilteringTime_4us		= ( uint16_t ) ( 0x02U << (0U) ),	 
+N    PWM_FilteringTime_16us	= ( uint16_t ) ( 0x03U << PWM_FLT_FLTDT_Pos ), /*!< PWM fault detection input signal filtering time is 16us */
+X    PWM_FilteringTime_16us	= ( uint16_t ) ( 0x03U << (0U) ),  
+N} PWM_FDFilteringTime_TypeDef;
+N
+N#define IS_PWM_FDFILTERINGTIME(TIME) (((TIME) == PWM_WaveFilteringTime_0us) || \
+N																			((TIME) == PWM_WaveFilteringTime_1us) || \
+N																			((TIME) == PWM_WaveFilteringTime_4us) || \
+N																			((TIME) == PWM_WaveFilteringTime_16us))
+X#define IS_PWM_FDFILTERINGTIME(TIME) (((TIME) == PWM_WaveFilteringTime_0us) || 																			((TIME) == PWM_WaveFilteringTime_1us) || 																			((TIME) == PWM_WaveFilteringTime_4us) || 																			((TIME) == PWM_WaveFilteringTime_16us))
+N/**
+N * @}
+N */
+N
+N/** @brief PWM_IT PWM Interrupt
+N * @{
+N */
+Ntypedef enum
+N{
+N    PWM_IT_INTEN = ( uint16_t ) PWM_CON_INTEN,	/*!< PWM Interrupt: PWM Interrupt */
+X    PWM_IT_INTEN = ( uint16_t ) (0x1L << (8U)),	 
+N} PWM_IT_TypeDef;
+N
+N#define IS_PWM_IT(IT) ((((IT) & (uint16_t)0xFEFF) == 0x00) && ((IT) != (uint16_t)0x0000))
+N
+N/**
+N * @}
+N */
+N
+N/** @brief PWM_Flag PWM Flag
+N * @{
+N */
+Ntypedef enum
+N{
+N    PWM_Flag_PWMIF  = ( uint8_t ) PWM_STS_PWMIF,	/*!< PWM Interrupt: PWM Interrupt */
+X    PWM_Flag_PWMIF  = ( uint8_t ) (0x1L << (0U)),	 
+N    PWM_Flag_FLTSTA = ( uint8_t ) PWM_STS_FLTSTA, /*!< PWM Interrupt: Flult Interrupt */
+X    PWM_Flag_FLTSTA = ( uint8_t ) (0x1L << (1U)),  
+N} PWM_Flag_TypeDef;
+N
+N#define IS_PWM_FLAG(FLAG) ((((FLAG) & (uint8_t)0xFC) == 0x00) && ((FLAG) != (uint8_t)0x00))
+N
+N#define IS_GET_PWM_FLAG(FLAG) (((FLAG) == PWM_Flag_PWMIF) || \
+N													     ((FLAG) == PWM_Flag_FLTSTA))
+X#define IS_GET_PWM_FLAG(FLAG) (((FLAG) == PWM_Flag_PWMIF) || 													     ((FLAG) == PWM_Flag_FLTSTA))
+N/**
+N * @}
+N */
+N
+N
+N/**
+N * @}
+N */
+N/* End of enumerations -----------------------------------------------------*/
+N
+N/** @brief PWM_Constants PWM Constants
+N  * @{
+N  */
+N#define IS_PWM_ALL_PERIPH(PERIPH) ((PERIPH) == PWM0)
+N
+N#define IS_PWM_COMPLEMENTARY_PERIPH(PERIPH) ((PERIPH) == PWM0)
+N/**
+N * @}
+N */
+N
+N/* Exported struct ------------------------------------------------------------*/
+N/** @defgroup PWM_Exported_Struct PWM Exported Struct
+N * @{
+N */
+N
+N/** @brief PWM Time base Configuration Structure definition
+N * @{
+N */
+Ntypedef struct
+N{
+N    uint16_t PWM_Prescaler; /*!<  Specifies the predivision.
+N																			This parameter can be a value of @ref PWM_Prescaler_TypeDef */
+N
+N    uint16_t PWM_AlignedMode; /*!< Specifies the aligne mode.
+N																			This parameter can be a value of @ref PWM_AlignedMode_TypeDef */
+N
+N    uint16_t PWM_WorkMode; /*!< Specifies the work mode.
+N																					This parameter can be a value of @ref PWM_WorkMode_TypeDef */
+N
+N    uint16_t PWM_Cycle;   /*!< Specifies the cycle.
+N															 */
+N
+N    uint32_t PWM_OutputChannel; /*!< Specifies the output Channel.
+N																			 This parameter can be a value of @ref PWM_CHANNEL_Typedef */
+N
+N    uint32_t PWM_LowPolarityChannl; /*!< Specifies the invert Channel.
+N																				 This parameter can be a value of @ref PWM_CHANNEL_Typedef */
+N} PWM_InitTypeDef;
+N/**
+N * @}
+N */
+N
+N/** @brief PWM_FDInitTypeDef
+N * @{
+N */
+Ntypedef struct
+N{
+N    uint16_t PWM_FDMode;							 /*!<  Specifies the PWM fault detection mode.
+N																										 This parameter can be a value of @ref PWM_FDMode_TypeDef */
+N    uint16_t PWM_FDVoltage;				 /*!<  Specifies the PWM fault detection active level.
+N																							 This parameter can be a value of @ref PWM_FDVoltage_TypeDef */
+N    uint16_t PWM_FDFilteringTime; /*!<  Specifies the PWM fault detection filtering time.
+N																			 This parameter can be a value of @ref PWM_FDFilteringTime_TypeDef */
+N} PWM_FDInitTypeDef;
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N/* End of struct -----------------------------------------------------*/
+N
+N/** @addtogroup PWM_Functions PWM Functions
+N * @{
+N */
+N
+N/* PWM Base functions ********************************************************/
+Nvoid PWM_DeInit ( PWM_TypeDef* PWMx );
+Nvoid PWM_StructInit ( PWM_InitTypeDef* PWM_InitStruct );
+Nvoid PWM_Init ( PWM_TypeDef* PWMx, PWM_InitTypeDef* PWM_InitStruct );
+Nvoid PWM_Cmd ( PWM_TypeDef* PWMx, FunctionalState NewState );
+Nvoid PWM_SetCycle ( PWM_TypeDef* PWMx, uint32_t PWM_Cycle );
+Nuint16_t PWM_GetCycle ( PWM_TypeDef* PWMx );
+Nvoid PWM_SetPrescaler ( PWM_TypeDef* PWMx, PWM_Prescaler_TypeDef PWM_Prescaler );
+NPWM_Prescaler_TypeDef PWM_GetPrescaler ( PWM_TypeDef* PWMx );
+Nvoid PWM_SetDuty ( PWM_TypeDef* PWMx, PWM_Channel_Typedef PWM_Channel, uint16_t PWM_Duty );
+Nuint16_t PWM_GetDuty ( PWM_TypeDef* PWMx, PWM_Channel_Typedef PWM_Channel );
+Nvoid PWM_RisingDeadTimeConfig ( PWM_TypeDef* PWMx, uint8_t PWM_RisingDeadTime );
+Nvoid PWM_FallingDeadTimeConfig ( PWM_TypeDef* PWMx, uint8_t PWM_FallingDeadTime );
+N
+N/* PWM Falut Dectection functions **********************************************/
+Nvoid PWM_FDStructInit ( PWM_FDInitTypeDef* PWM_FDInitStruct );
+Nvoid PWM_FDInit ( PWM_TypeDef* PWMx, PWM_FDInitTypeDef* PWM_FDInitStruct );
+Nvoid PWM_FDCmd ( PWM_TypeDef* PWMx, FunctionalState NewState );
+N
+N/* Interrupt Handler functions  ***********************************************/
+Nvoid PWM_ITConfig ( PWM_TypeDef* PWMx, uint16_t PWM_IT, FunctionalState NewState );
+NFlagStatus PWM_GetFlagStatus ( PWM_TypeDef* PWMx, uint16_t PWM_FLAG );
+Nvoid PWM_ClearFlag ( PWM_TypeDef* PWMx, uint16_t PWM_FLAG );
+N
+N/**
+N * @}
+N */
+N/* End of functions --------------------------------------------------*/
+N
+N/**
+N * @}
+N */
+N
+N/**
+N * @}
+N */
+N
+N#ifdef __cplusplus
+S}
+N#endif
+N
+N#endif
+L 8 "..\HardDrive\buzzer.h" 2
+N
+N/** @brief ∑‰√˘∆˜≈‰÷√Ω·ππÃÂ */
 Ntypedef struct {
-N    GPIO_TypeDef* GPIOx;         // GPIOÁ´ØÂè£
-N    uint16_t GPIO_Pin;           // GPIOÂºïËÑö
+N    PWM_TypeDef* PWMx;           // PWMƒ£øÈ£®PWM0£©
+N    PWM_Channel_Typedef Channel; // PWMÕ®µ¿
+N    uint32_t Frequency;          // ∆µ¬ £®Hz£©
+N    uint8_t DutyCycle;           // ’ºø’±»£®0-100£©
 N} Buzzer_InitTypeDef;
 N
-N/* ËúÇÈ∏£Âô®È©±Âä®ÂáΩÊï∞ */
-Nvoid Buzzer_Init(Buzzer_InitTypeDef* Buzzer_InitStruct);
-Nvoid Buzzer_Beep(uint32_t duration_ms);
-Nvoid Buzzer_Stop(void);
+Nvoid Buzzer_Init(Buzzer_InitTypeDef* Buzzer_InitStruct);  // ≥ı ºªØ
+Nvoid Buzzer_Beep(uint32_t duration_ms);  // —” ±√˘Ω–
+Nvoid Buzzer_Start(void);  // ∆Ù∂Ø∑‰√˘∆˜£®≥÷–¯√˘Ω–£©
+Nvoid Buzzer_Stop(void);  // Õ£÷π√˘Ω–
+Nvoid Buzzer_SetFrequency(uint32_t frequency);  // …Ë÷√∆µ¬ 
+Nvoid Buzzer_SetDutyCycle(uint8_t duty_cycle);  // …Ë÷√’ºø’±»
 N
-W "..\FWLib\HardDrive\buzzer.h" 18 24 last line of file ends without a newline
-N#endif /* __BUZZER_H */
-L 2 "..\FWLib\HardDrive\buzzer.c" 2
+N#endif /* __BUZZER_PWM_H */
+N
+L 3 "..\HardDrive\buzzer.c" 2
 N
 Nstatic Buzzer_InitTypeDef Buzzer_Handler;
 N
 N/**
 N  * @brief  ∑‰√˘∆˜≥ı ºªØ
-N  * @param  Buzzer_InitStruct: ∑‰√˘∆˜≈‰÷√Ω·ππÃÂ
-N  * @retval None
 N  */
 Nvoid Buzzer_Init(Buzzer_InitTypeDef* Buzzer_InitStruct)
 N{
 N    /* ±£¥Ê≈‰÷√ */
-N    Buzzer_Handler.GPIOx = Buzzer_InitStruct->GPIOx;
-N    Buzzer_Handler.GPIO_Pin = Buzzer_InitStruct->GPIO_Pin;
+N    Buzzer_Handler.PWMx = Buzzer_InitStruct->PWMx;
+N    Buzzer_Handler.Channel = Buzzer_InitStruct->Channel;
+N    Buzzer_Handler.Frequency = Buzzer_InitStruct->Frequency;
+N    Buzzer_Handler.DutyCycle = Buzzer_InitStruct->DutyCycle;
 N    
-N    /* GPIO≥ı ºªØ */
-N    GPIO_InitTypeDef GPIO_InitStructure;
+N    /* ≈‰÷√PWM */
+N    PWM_InitTypeDef PWM_InitStructure;
 N    
-N    /* ≈‰÷√GPIOŒ™Õ∆ÕÏ ‰≥ˆ */
-N    GPIO_InitStructure.GPIO_Pin = Buzzer_Handler.GPIO_Pin;
-N    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT_PP;
-N    GPIO_InitStructure.GPIO_DriveLevel = GPIO_DriveLevel_0;
-N    GPIO_Init(Buzzer_Handler.GPIOx, &GPIO_InitStructure);
+N    /* PWMΩ·ππÃÂ≥ı ºªØ */
+N    PWM_StructInit(&PWM_InitStructure);
 N    
-N    /* ≥ı º◊¥Ã¨πÿ±’∑‰√˘∆˜ */
-N    GPIO_ResetBits(Buzzer_Handler.GPIOx, Buzzer_Handler.GPIO_Pin);
+N    /* ≈‰÷√PWM≤Œ ˝ */
+N    PWM_InitStructure.PWM_Prescaler = PWM_PRESCALER_DIV1;     // ‘§∑÷∆µ
+N    PWM_InitStructure.PWM_AlignedMode = PWM_AlignmentMode_Edge; // ±ﬂ—ÿ∂‘∆Îƒ£ Ω
+N    PWM_InitStructure.PWM_WorkMode = PWM_WorkMode_Independent;  // ∂¿¡¢ƒ£ Ω
+N    
+N    /* º∆À„÷‹∆⁄÷µ */
+N    // ºŸ…ËœµÕ≥ ±÷”Œ™16MHz£¨÷‹∆⁄ =  ±÷”∆µ¬  / PWM∆µ¬ 
+N    uint32_t system_clock = 16000000; // –Ë“™∏˘æ› µº œµÕ≥ ±÷”µ˜’˚
+N    PWM_InitStructure.PWM_Cycle = system_clock / Buzzer_Handler.Frequency;
+N    
+N    /* ≈‰÷√ ‰≥ˆÕ®µ¿ */
+N    PWM_InitStructure.PWM_OutputChannel = Buzzer_Handler.Channel;
+N    PWM_InitStructure.PWM_LowPolarityChannl = PWMChannel_Less; // ’˝≥£º´–‘
+N    
+N    /* ≥ı ºªØPWM */
+N    PWM_Init(Buzzer_Handler.PWMx, &PWM_InitStructure);
+N    
+N    /* …Ë÷√’ºø’±» */
+N    uint16_t duty_value = (PWM_InitStructure.PWM_Cycle * Buzzer_Handler.DutyCycle) / 100;
+N    PWM_SetDuty(Buzzer_Handler.PWMx, Buzzer_Handler.Channel, duty_value);
+N    
+N    /* ≥ı º◊¥Ã¨πÿ±’PWM */
+N    PWM_Cmd(Buzzer_Handler.PWMx, DISABLE);
 N}
 N
 N/**
-N  * @brief  ∑‰√˘∆˜√˘Ω–
-N  * @param  duration_ms: √˘Ω–≥÷–¯ ±º‰£®∫¡√Î£©
-N  * @retval None
+N  * @brief  ∑‰√˘∆˜—” ±√˘Ω–
 N  */
 Nvoid Buzzer_Beep(uint32_t duration_ms)
 N{
-N    /* ø™∆Ù∑‰√˘∆˜ */
-N    GPIO_SetBits(Buzzer_Handler.GPIOx, Buzzer_Handler.GPIO_Pin);
+N    /* ø™∆ÙPWM ‰≥ˆ,ø™ º√˘Ω– */
+N    PWM_Cmd(Buzzer_Handler.PWMx, ENABLE);
 N    
 N    /* µ»¥˝÷∏∂® ±º‰ */
 N    // –Ë“™ µœ÷—” ±∫Ø ˝
 N    // Delay_ms(duration_ms);
 N    
-N    /* πÿ±’∑‰√˘∆˜ */
-N    GPIO_ResetBits(Buzzer_Handler.GPIOx, Buzzer_Handler.GPIO_Pin);
+N    /* πÿ±’PWM ‰≥ˆ£¨Õ£÷π√˘Ω– */
+N    PWM_Cmd(Buzzer_Handler.PWMx, DISABLE);
 N}
 N
 N/**
-N  * @brief  ¡¢º¥Õ£÷π∑‰√˘∆˜
-N  * @retval None
+N  * @brief  ∆Ù∂Ø∑‰√˘∆˜£®≥÷–¯√˘Ω–£¨–Ë“™ ÷∂ØÕ£÷π£©
+N  */
+Nvoid Buzzer_Start(void)
+N{
+N    /* ø™∆ÙPWM ‰≥ˆ */
+N    PWM_Cmd(Buzzer_Handler.PWMx, ENABLE);
+N}
+N
+N/**
+N  * @brief  Õ£÷π∑‰√˘∆˜
 N  */
 Nvoid Buzzer_Stop(void)
 N{
-N    GPIO_ResetBits(Buzzer_Handler.GPIOx, Buzzer_Handler.GPIO_Pin);
-W "..\FWLib\HardDrive\buzzer.c" 54 2 last line of file ends without a newline
+N    PWM_Cmd(Buzzer_Handler.PWMx, DISABLE);
+N}
+N
+N/**
+N  * @brief  …Ë÷√∑‰√˘∆˜∆µ¬ 
+N  */
+Nvoid Buzzer_SetFrequency(uint32_t frequency)
+N{
+N    Buzzer_Handler.Frequency = frequency;
+N    
+N    /* ÷ÿ–¬º∆À„≤¢…Ë÷√÷‹∆⁄ */
+N    uint32_t system_clock = 16000000; // –Ë“™∏˘æ› µº œµÕ≥ ±÷”µ˜’˚
+N    uint16_t cycle_value = system_clock / frequency;
+N    PWM_SetCycle(Buzzer_Handler.PWMx, cycle_value);
+N    
+N    /* ∏¸–¬’ºø’±»“‘±£≥÷±»¿˝ */
+N    uint16_t duty_value = (cycle_value * Buzzer_Handler.DutyCycle) / 100;
+N    PWM_SetDuty(Buzzer_Handler.PWMx, Buzzer_Handler.Channel, duty_value);
+N}
+N
+N/**
+N  * @brief  …Ë÷√’ºø’±»
+N  */
+Nvoid Buzzer_SetDutyCycle(uint8_t duty_cycle)
+N{
+N    if(duty_cycle > 100) duty_cycle = 100;
+N    Buzzer_Handler.DutyCycle = duty_cycle;
+N    
+N    /* ªÒ»°µ±«∞÷‹∆⁄÷µ */
+N    uint16_t cycle_value = PWM_GetCycle(Buzzer_Handler.PWMx);
+N    
+N    /* º∆À„≤¢…Ë÷√–¬µƒ’ºø’±»÷µ */
+N    uint16_t duty_value = (cycle_value * duty_cycle) / 100;
+N    PWM_SetDuty(Buzzer_Handler.PWMx, Buzzer_Handler.Channel, duty_value);
 N}
