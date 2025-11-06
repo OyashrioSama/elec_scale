@@ -3,8 +3,8 @@ Project.Name=elec_scale
 Project.Path=D:\Saiyuan\elec_scale
 Project.KeilPath=D:\Saiyuan\elec_scale\Keil_C\
 Project.CurrentPath=D:\Saiyuan\elec_scale\elec_scale.cgen
-Project.CreationTime=20251106002811
-Project.ModificationTime=20251106002811
+Project.CreationTime=20251107002912
+Project.ModificationTime=20251107002912
 Project.Version=EasyCodeCube 3.6.0
 Project.IsBootloaderProject=false
 Project.ProjectMode=KEIL_ARM
@@ -28,7 +28,7 @@ Style=Document
 [/WindowStyle]
 [WindowStyle]
 Name=Designer
-Style=Document
+Style=DockRightAutoHide
 [/WindowStyle]
 [WindowStyle]
 Name=Watch

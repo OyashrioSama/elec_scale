@@ -1,5 +1,6 @@
 L 1 "..\HardDrive\buzzer.c"
 N//buzzer.c
+N
 N#include "buzzer.h"
 L 1 "..\HardDrive\buzzer.h" 1
 N//buzzer.h
@@ -7347,10 +7348,11 @@ Nvoid Buzzer_Start(void);  // 启动蜂鸣器（持续鸣叫）
 Nvoid Buzzer_Stop(void);  // 停止鸣叫
 Nvoid Buzzer_SetFrequency(uint32_t frequency);  // 设置频率
 Nvoid Buzzer_SetDutyCycle(uint8_t duty_cycle);  // 设置占空比
+Nvoid Buzzer_TimerHandler(void);
 N
 N#endif /* __BUZZER_PWM_H */
 N
-L 3 "..\HardDrive\buzzer.c" 2
+L 4 "..\HardDrive\buzzer.c" 2
 N
 Nstatic Buzzer_InitTypeDef Buzzer_Handler;
 N

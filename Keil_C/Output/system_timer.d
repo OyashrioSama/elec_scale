@@ -1,0 +1,14 @@
+..\Output\system_timer.o: ..\Application\system_timer.c
+..\Output\system_timer.o: ..\Application\system_timer.h
+..\Output\system_timer.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx.h
+..\Output\system_timer.o: ..\FWLib\SC32F1XXX_Lib\inc\SC32f12xx.h
+..\Output\system_timer.o: ..\CMSIS\core_cm0plus.h
+..\Output\system_timer.o: C:\Keil_v5\ARM\ARMCC\BIN\..\include\stdint.h
+..\Output\system_timer.o: ..\CMSIS\cmsis_version.h
+..\Output\system_timer.o: ..\CMSIS\cmsis_compiler.h
+..\Output\system_timer.o: ..\CMSIS\cmsis_armcc.h
+..\Output\system_timer.o: ..\CMSIS\mpu_armv7.h
+..\Output\system_timer.o: ..\FWLib\SC32F1XXX_Lib\inc\system_sc32xxxxx.h
+..\Output\system_timer.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_btm.h
+..\Output\system_timer.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32.h
+..\Output\system_timer.o: ..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_rcc.h

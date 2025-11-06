@@ -20,6 +20,7 @@ void Buzzer_Start(void);  // 启动蜂鸣器（持续鸣叫）
 void Buzzer_Stop(void);  // 停止鸣叫
 void Buzzer_SetFrequency(uint32_t frequency);  // 设置频率
 void Buzzer_SetDutyCycle(uint8_t duty_cycle);  // 设置占空比
+void Buzzer_TimerHandler(void);
 
 #endif /* __BUZZER_PWM_H */
 

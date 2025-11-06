@@ -1,6 +1,10 @@
 L 1 "..\HardDrive\key.c"
+N// key.c
+N
 N#include "key.h"
 L 1 "..\HardDrive\key.h" 1
+N//key.h
+N
 N#ifndef __KEY_H
 N#define __KEY_H
 N
@@ -5997,7 +6001,7 @@ N/**
 N* @}
 N*/
 N
-L 5 "..\HardDrive\key.h" 2
+L 7 "..\HardDrive\key.h" 2
 N#include "sc32f1xxx_gpio.h"
 L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_gpio.h" 1
 N/**
@@ -6232,7 +6236,7 @@ N
 N#endif /* _SC32F1XXX_GPIO_H */
 N
 N
-L 6 "..\HardDrive\key.h" 2
+L 8 "..\HardDrive\key.h" 2
 N#include "sc32f1xxx_int.h"
 L 1 "..\FWLib\SC32F1XXX_Lib\inc\sc32f1xxx_int.h" 1
 N/**
@@ -7202,13 +7206,25 @@ S}
 N#endif
 N
 N#endif
-L 7 "..\HardDrive\key.h" 2
+L 9 "..\HardDrive\key.h" 2
 N
 N/** @brief 按键状态 */
 Ntypedef enum {
 N    KEY_RELEASED = 0,  // 按键释放
 N    KEY_PRESSED = 1    // 按键按下
 N} Key_State;
+N
+N/* 按键ID定义 */
+Ntypedef enum {
+N    KEY_ID_TARE = 0,      // 去皮按键
+N    KEY_ID_CALIB,         // 校准按键  
+N    KEY_ID_MEASURE,       // 开始测量按键
+N    KEY_ID_POWER,         // 电源/功能按键
+N    KEY_ID_MAX
+N} Key_ID;
+N
+N/** @brief 按键回调函数指针 */
+Ntypedef void (*Key_Callback)(Key_ID keyId);
 N
 N/** @brief 按键配置结构体 */
 Ntypedef struct {
@@ -7217,51 +7233,58 @@ N    uint16_t GPIO_Pin;             // GPIO引脚
 N    INT_Channel_Typedef INT_Channel; // 外部中断通道
 N    INT_INTSEL_Typedef INT_Port;   // 外部中断端口
 N    Key_State ActiveLevel;         // 有效电平（按下时的电平）
+N    Key_ID KeyID;                  // 按键ID
 N} Key_InitTypeDef;
-N
-N/** @brief 按键回调函数指针 */
-Ntypedef void (*Key_Callback)(void);
 N
 N/* 按键驱动函数 */
 Nvoid Key_Init(Key_InitTypeDef* Key_InitStruct);
-NKey_State Key_Read(void);
+NKey_State Key_Read(Key_ID keyId);
 Nvoid Key_SetPressCallback(Key_Callback callback);
 Nvoid Key_SetReleaseCallback(Key_Callback callback);
+Nvoid Key_IRQHandler(Key_ID keyId);
 N
-W "..\HardDrive\key.h" 32 21 last line of file ends without a newline
 N#endif /* __KEY_H */
-L 2 "..\HardDrive\key.c" 2
+L 4 "..\HardDrive\key.c" 2
 N
-Nstatic Key_InitTypeDef Key_Handler;
-Nstatic Key_Callback PressCallback = 0;  // 使用0代替NULL
-Nstatic Key_Callback ReleaseCallback = 0;
+N/* 多按键处理结构 */
+Nstatic struct {
+N    Key_InitTypeDef config[KEY_ID_MAX];  // 4个按键的配置
+N    Key_Callback PressCallback;
+N    Key_Callback ReleaseCallback;
+N    uint8_t keyCount;                    // 已注册的按键数量
+N} Key_Handler = {0};
 N
 N/**
 N  * @brief  按键初始化
 N  */
 Nvoid Key_Init(Key_InitTypeDef* Key_InitStruct)
 N{
+N	if(Key_Handler.keyCount >= KEY_ID_MAX) return;
+N	
+N	uint8_t idx = Key_Handler.keyCount;
+N	
 N    /* 保存配置 */
-N    Key_Handler.GPIOx = Key_InitStruct->GPIOx;
-N    Key_Handler.GPIO_Pin = Key_InitStruct->GPIO_Pin;
-N    Key_Handler.INT_Channel = Key_InitStruct->INT_Channel;
-N    Key_Handler.INT_Port = Key_InitStruct->INT_Port;
-N    Key_Handler.ActiveLevel = Key_InitStruct->ActiveLevel;
+N    Key_Handler.config[idx].GPIOx = Key_InitStruct->GPIOx;
+N    Key_Handler.config[idx].GPIO_Pin = Key_InitStruct->GPIO_Pin;
+N    Key_Handler.config[idx].INT_Channel = Key_InitStruct->INT_Channel;
+N    Key_Handler.config[idx].INT_Port = Key_InitStruct->INT_Port;
+N    Key_Handler.config[idx].ActiveLevel = Key_InitStruct->ActiveLevel;
+N    Key_Handler.config[idx].KeyID = Key_InitStruct->KeyID;
 N    
 N    /* GPIO初始化 - 上拉输入模式 */
 N    GPIO_InitTypeDef GPIO_InitStructure;
-N    GPIO_InitStructure.GPIO_Pin = Key_Handler.GPIO_Pin;
+N    GPIO_InitStructure.GPIO_Pin = Key_Handler.config[idx].GPIO_Pin;
 N    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_PU;  // 上拉输入
 N    GPIO_InitStructure.GPIO_DriveLevel = GPIO_DriveLevel_0;
-N    GPIO_Init(Key_Handler.GPIOx, &GPIO_InitStructure);
+N    GPIO_Init(Key_Handler.config[idx].GPIOx, &GPIO_InitStructure);
 N    
 N    /* 外部中断初始化 */
 N    INT_InitTypeDef INT_InitStructure;
-N    INT_InitStructure.INT_Channel = Key_Handler.INT_Channel;
-N    INT_InitStructure.INT_INTSEL = Key_Handler.INT_Port;
+N    INT_InitStructure.INT_Channel = Key_Handler.config[idx].INT_Channel;
+N    INT_InitStructure.INT_INTSEL = Key_Handler.config[idx].INT_Port;
 N    
 N    /* 根据有效电平配置触发方式 */
-N    if(Key_Handler.ActiveLevel == KEY_PRESSED) {
+N    if(Key_Handler.config[idx].ActiveLevel == KEY_PRESSED) {
 N        // 按下为低电平：下降沿触发
 N        INT_InitStructure.INT_Trigger = INT_Trigger_Falling;
 N    } else {
@@ -7272,20 +7295,22 @@ N
 N    INT_Init(&INT_InitStructure);
 N    
 N    /* 使能外部中断 */
-N    INT_ITConfig(Key_Handler.INT_Channel, 
-N                 (Key_Handler.ActiveLevel == KEY_PRESSED) ? INT_IT_Falling : INT_IT_Rising, 
+N    INT_ITConfig(Key_Handler.config[idx].INT_Channel, 
+N                 (Key_Handler.config[idx].ActiveLevel == KEY_PRESSED) ? INT_IT_Falling : INT_IT_Rising, 
 N                 ENABLE);
+N    Key_Handler.keyCount++;
 N}
 N
 N/**
 N  * @brief  读取按键当前状态
 N  */
-NKey_State Key_Read(void)
+NKey_State Key_Read(Key_ID keyId)
 N{
-N    BitAction pin_state = GPIO_ReadDataBit(Key_Handler.GPIOx, Key_Handler.GPIO_Pin);
+N	if(keyId >= Key_Handler.keyCount) return KEY_RELEASED;  // 边界检查
+N    BitAction pin_state = GPIO_ReadDataBit(Key_Handler.config[keyId].GPIOx, Key_Handler.config[keyId].GPIO_Pin);
 N    
-N    if((pin_state == SET && Key_Handler.ActiveLevel == KEY_PRESSED) ||
-N       (pin_state == RESET && Key_Handler.ActiveLevel == KEY_RELEASED)) {
+N    if((pin_state == SET && Key_Handler.config[keyId].ActiveLevel == KEY_PRESSED) ||
+N       (pin_state == RESET && Key_Handler.config[keyId].ActiveLevel == KEY_RELEASED)) {
 N        return KEY_RELEASED;
 N    } else {
 N        return KEY_PRESSED;
@@ -7297,7 +7322,7 @@ N  * @brief  设置按键按下回调函数
 N  */
 Nvoid Key_SetPressCallback(Key_Callback callback)
 N{
-N    PressCallback = callback;
+N    Key_Handler.PressCallback = callback;
 N}
 N
 N/**
@@ -7305,25 +7330,26 @@ N  * @brief  设置按键释放回调函数
 N  */
 Nvoid Key_SetReleaseCallback(Key_Callback callback)
 N{
-N    ReleaseCallback = callback;
+N    Key_Handler.ReleaseCallback = callback;
 N}
 N
 N/**
 N  * @brief  外部中断处理函数（需要在SC_it.c中调用）
 N  */
-Nvoid Key_IRQHandler(void)
+Nvoid Key_IRQHandler(Key_ID keyId)
 N{
+N	if(keyId >= Key_Handler.keyCount) return;
+N	
 N    /* 清除中断标志 */
-N    INT_ClearFlag(Key_Handler.INT_Channel);
+N    INT_ClearFlag(Key_Handler.config[keyId].INT_Channel);
 N    
 N    /* 读取当前按键状态 */
-N    Key_State current_state = Key_Read();
+N    Key_State current_state = Key_Read(keyId);
 N    
 N    /* 调用对应的回调函数 */
-N    if(current_state == KEY_PRESSED && PressCallback != 0) {
-N        PressCallback();
-N    } else if(current_state == KEY_RELEASED && ReleaseCallback != 0) {
-N        ReleaseCallback();
+N    if(current_state == KEY_PRESSED && Key_Handler.PressCallback != 0) {
+N        Key_Handler.PressCallback(keyId);
+N    } else if(current_state == KEY_RELEASED && Key_Handler.ReleaseCallback != 0) {
+N        Key_Handler.ReleaseCallback(keyId);
 N    }
-W "..\HardDrive\key.c" 96 2 last line of file ends without a newline
 N}

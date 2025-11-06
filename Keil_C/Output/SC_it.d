@@ -41,3 +41,6 @@
 ..\Output\SC_it.o: ..\User\HeadFiles\FunctionType.h
 ..\Output\SC_it.o: ..\User\HeadFiles\CompCtrlDefine.h
 ..\Output\SC_it.o: ..\Drivers\SCDriver_List.h
+..\Output\SC_it.o: ..\Application\key_handler.h
+..\Output\SC_it.o: ..\HardDrive\key.h
+..\Output\SC_it.o: ..\Application\system_timer.h

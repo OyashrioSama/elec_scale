@@ -1,4 +1,5 @@
 //buzzer.c
+
 #include "buzzer.h"
 
 static Buzzer_InitTypeDef Buzzer_Handler;

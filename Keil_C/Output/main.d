@@ -41,3 +41,10 @@
 ..\Output\main.o: ..\User\HeadFiles\UserExport.h
 ..\Output\main.o: ..\User\HeadFiles\FunctionType.h
 ..\Output\main.o: ..\User\HeadFiles\CompCtrlDefine.h
+..\Output\main.o: ..\HardDrive\weight_sensor.h
+..\Output\main.o: ..\HardDrive\key.h
+..\Output\main.o: ..\HardDrive\buzzer.h
+..\Output\main.o: ..\Application\app_init.h
+..\Output\main.o: ..\Application\system_timer.h
+..\Output\main.o: ..\Application\scale_manager.h
+..\Output\main.o: ..\Application\key_handler.h
